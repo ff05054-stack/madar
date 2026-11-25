@@ -1,306 +1,262 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مَدار | إدارة الضيافة</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مدار | إدارة منشآت الضيافة</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
-:root{--navy:#101e35;--gold:#c6a66b;--bg:#f4f6f9;--white:#fff;--text:#202d40;--muted:#8993a2}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Sans Arabic',sans-serif}
-button,input,select{font-family:inherit}
-.layout{display:flex;min-height:100vh}
-.sidebar{width:245px;background:var(--navy);color:white;padding:24px 16px;flex-shrink:0}
-.brand{text-align:center;padding:12px 0 28px;border-bottom:1px solid #ffffff20}
-.brand h1{font-size:34px;margin:0;color:var(--gold);letter-spacing:2px}
-.brand p{font-size:11px;color:#c5ccd5;margin:4px}
-.menu{margin-top:22px}
-.menu button{width:100%;border:0;background:none;color:#d0d7e2;text-align:right;padding:12px;border-radius:9px;margin:3px 0;cursor:pointer;font-size:14px}
-.menu button.active,.menu button:hover{background:#ffffff17;color:var(--gold)}
-.menu small{display:block;color:#8e9aab;margin:20px 10px 8px}
-.main{flex:1;min-width:0;padding:25px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:26px}
-.top h2{margin:0;font-size:23px}
-.top p{margin:4px 0;color:var(--muted);font-size:12px}
-.profile{background:white;border-radius:12px;padding:10px 14px;font-size:12px}
-.welcome{background:linear-gradient(115deg,#101e35,#253c5c);color:white;padding:24px;border-radius:16px;margin-bottom:22px}
-.welcome h2{margin:0 0 7px;color:var(--gold)}
-.welcome p{margin:0;color:#d0d8e3;font-size:13px}
-.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:22px}
-.card{background:white;border:1px solid #e9edf2;border-radius:13px;padding:18px}
-.card .label{font-size:12px;color:var(--muted)}
-.card .number{font-size:25px;font-weight:700;margin:9px 0}
-.card .note{font-size:11px;color:#84909e}
-.panel{background:white;border:1px solid #e9edf2;border-radius:14px;padding:19px;margin-bottom:18px}
-.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}
-.panel h3{font-size:16px;margin:0}
-.btn{border:0;border-radius:8px;background:var(--navy);color:white;padding:10px 15px;cursor:pointer;font-size:12px}
-.btn.gold{background:var(--gold);color:#172238}
-.btn.light{background:#edf0f4;color:var(--navy)}
-table{width:100%;border-collapse:collapse;min-width:520px}
-th,td{text-align:right;padding:12px 9px;border-bottom:1px solid #edf0f3;font-size:12px}
-th{color:var(--muted);font-weight:500;background:#fafbfd}
-.table-wrap{overflow-x:auto}
-.tag{background:#e9f5ed;color:#27834b;padding:5px 9px;border-radius:20px;font-size:10px}
-.page{display:none}
-.page.active{display:block}
-.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.field label{display:block;font-size:12px;margin-bottom:6px;color:#667184}
-.field input,.field select{width:100%;padding:11px;border:1px solid #dfe4eb;border-radius:8px;background:white}
-.field.full{grid-column:1/-1}
-.actions{display:flex;gap:8px;margin-top:16px}
-.empty{text-align:center;padding:30px;color:var(--muted);font-size:13px}
-.notice{font-size:12px;color:#8a6c32;background:#fff8e8;padding:12px;border-radius:9px;margin-bottom:15px}
-.mobile-menu{display:none}
-footer{text-align:center;color:#9aa3ae;font-size:11px;padding:20px}
-@media(max-width:850px){
-.sidebar{width:190px;padding:16px 10px}
-.main{padding:17px}
-.cards{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:600px){
-.layout{display:block}
-.sidebar{width:100%;padding:10px 12px}
-.brand{display:flex;align-items:center;justify-content:space-between;padding:4px 8px;border:0}
-.brand h1{font-size:26px}
-.brand p{display:none}
-.menu{display:flex;overflow-x:auto;margin:8px 0 0;gap:5px}
-.menu button{white-space:nowrap;width:auto;padding:9px 12px;font-size:12px}
-.menu small{display:none}
-.main{padding:15px}
-.top h2{font-size:19px}
-.cards{gap:9px}
-.card{padding:13px}
-.card .number{font-size:21px}
-.form-grid{grid-template-columns:1fr}
-.field.full{grid-column:auto}
-.welcome{padding:19px}
-}
-</style>
-</head>
+:root{--navy:#142b4a;--gold:#c8a45d;--bg:#f4f6fa;--card:#fff;--ink:#17243a;--muted:#718096;--line:#e7ebf1;--green:#18845b;--red:#c34b52;--blue:#3769a5}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif;font-size:14px}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:10px;padding:10px 14px;background:var(--navy);color:#fff}button.secondary{background:#eef2f7;color:var(--ink)}button.gold{background:var(--gold);color:#18263a}button.danger{background:#fff0f0;color:var(--red)}input,select,textarea{border:1px solid var(--line);border-radius:9px;padding:10px;background:#fff;color:var(--ink);width:100%;outline-color:var(--gold)}textarea{min-height:75px}.app{display:flex;min-height:100vh}.sidebar{width:250px;background:var(--navy);color:#fff;padding:20px 14px;position:fixed;right:0;top:0;bottom:0;overflow:auto;z-index:5}.brand{display:flex;align-items:center;gap:10px;padding:8px 8px 22px;border-bottom:1px solid #ffffff22;margin-bottom:18px}.brandmark{width:40px;height:40px;border-radius:13px;background:var(--gold);display:grid;place-items:center;color:var(--navy);font-weight:bold;font-size:21px}.brand strong{font-size:20px;letter-spacing:1px}.brand small{display:block;color:#c5d0de;margin-top:3px}.navgroup{font-size:11px;color:#aebdd0;margin:17px 10px 7px}.nav button{width:100%;text-align:right;background:transparent;color:#dbe4ef;margin:2px 0;padding:11px 12px;border-radius:9px}.nav button.active,.nav button:hover{background:#ffffff19;color:#fff}.nav button span{display:inline-block;width:27px}.sidefoot{border-top:1px solid #ffffff22;margin-top:22px;padding:15px 8px;color:#bdc9d8;font-size:12px}.main{margin-right:250px;width:calc(100% - 250px);padding:22px 26px 40px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}.topbar h1{font-size:23px;margin:0 0 5px}.muted{color:var(--muted)}.top-actions{display:flex;align-items:center;gap:9px}.pill{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px}.wrap{max-width:1450px;margin:auto}.grid{display:grid;gap:14px}.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:15px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:17px;box-shadow:0 3px 14px #142b4a08}.statlabel{color:var(--muted);font-size:12px}.statvalue{font-size:25px;font-weight:700;margin:10px 0 3px;direction:ltr;text-align:right}.statnote{font-size:11px;color:var(--muted)}.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:23px 0 12px}.sectionhead h2{font-size:17px;margin:0}.cols{grid-template-columns:1.25fr .75fr}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.summary div{padding:13px;background:#f7f8fb;border-radius:11px}.summary b{display:block;font-size:20px;margin-top:7px;direction:ltr;text-align:right}.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:13px}.toolbar input{max-width:260px}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:650px}th,td{text-align:right;padding:12px 10px;border-bottom:1px solid var(--line);white-space:nowrap}th{font-size:12px;color:var(--muted);font-weight:600}td{font-size:13px}.status{display:inline-block;border-radius:20px;padding:5px 9px;font-size:11px;background:#eef3f8;color:#52657a}.status.ok{background:#e7f6ef;color:var(--green)}.status.wait{background:#fff5df;color:#986a17}.status.cancel{background:#fff0f0;color:var(--red)}.empty{padding:35px;text-align:center;color:var(--muted)}.hidden{display:none!important}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px}.field.full{grid-column:1/-1}.modalback{position:fixed;inset:0;background:#07162988;z-index:20;display:grid;place-items:center;padding:15px}.modal{background:#fff;border-radius:16px;width:min(680px,100%);max-height:92vh;overflow:auto;padding:20px}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}.modalhead h3{margin:0}.modalactions{display:flex;gap:8px;justify-content:flex-start;margin-top:17px}.kpi{color:var(--green);font-weight:bold}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.day{background:#f8f9fb;border:1px solid var(--line);border-radius:9px;min-height:78px;padding:7px;font-size:12px}.day small{display:block;color:var(--muted)}.day.booked{background:#fff5df;border-color:#f1dfb8}.day.today{outline:2px solid var(--gold)}.swatch{width:25px;height:25px;border-radius:7px;border:1px solid #ddd;vertical-align:middle}.footerhint{font-size:11px;color:var(--muted);margin-top:15px;line-height:1.8}.mobilemenu{display:none}
+@media(max-width:950px){.sidebar{width:220px}.main{margin-right:220px;width:calc(100% - 220px);padding:18px}.stats{grid-template-columns:repeat(2,1fr)}.cols{grid-template-columns:1fr}}
+@media(max-width:650px){.sidebar{transform:translateX(100%);transition:.2s;width:270px}.sidebar.open{transform:translateX(0)}.main{margin:0;width:100%;padding:15px}.mobilemenu{display:inline-block}.topbar{align-items:flex-start}.topbar h1{font-size:19px}.top-actions .pill:nth-child(1){display:none}.stats{gap:9px}.statvalue{font-size:21px}.formgrid{grid-template-columns:1fr}.summary{grid-template-columns:1fr 1fr}.calendar{gap:3px}.day{min-height:62px;padding:4px;font-size:10px}}
+</style></head>
 <body>
-<div class="layout">
-<aside class="sidebar">
-<div class="brand">
-<h1>مَدار</h1>
-<p>منصة إدارة الضيافة والإقامة</p>
-</div>
-<nav class="menu">
-<small>القائمة الرئيسية</small>
-<button class="active" onclick="showPage('dashboard',this)">⌂ لوحة التحكم</button>
-<button onclick="showPage('bookings',this)">▦ الحجوزات</button>
-<button onclick="showPage('units',this)">⌂ الوحدات والمنشآت</button>
-<button onclick="showPage('customers',this)">♙ العملاء</button>
-<button onclick="showPage('contracts',this)">▤ العقود</button>
-<small>الإدارة المالية</small>
-<button onclick="showPage('finance',this)">◈ المالية</button>
-<button onclick="showPage('reports',this)">▥ التقارير</button>
-<small>إدارة النظام</small>
-<button onclick="showPage('staff',this)">♙ الموظفون</button>
-<button onclick="showPage('settings',this)">⚙ الإعدادات</button>
-</nav>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+ <div class="brand"><div class="brandmark">م</div><div><strong>مَدار</strong><small>MADAR · إدارة الضيافة</small></div></div>
+ <div class="nav" id="nav">
+ <div class="navgroup">الرئيسية</div>
+ <button class="active" data-page="dashboard"><span>⌂</span>لوحة التحكم</button>
+ <div class="navgroup">إدارة المنشأة</div>
+ <button data-page="bookings"><span>▣</span>الحجوزات</button>
+ <button data-page="calendar"><span>▦</span>التقويم</button>
+ <button data-page="units"><span>⌂</span>الوحدات</button>
+ <button data-page="customers"><span>♙</span>العملاء</button>
+ <button data-page="staff"><span>♧</span>الموظفون والصلاحيات</button>
+ <div class="navgroup">المستندات والمالية</div>
+ <button data-page="contracts"><span>▤</span>العقود</button>
+ <button data-page="finance"><span>ر.س</span>الإدارة المالية</button>
+ <button data-page="reports"><span>▥</span>التقارير والإحصائيات</button>
+ <div class="navgroup">النظام</div>
+ <button data-page="settings"><span>⚙</span>مركز التحكم</button>
+ <button data-page="subscriptions"><span>◇</span>الاشتراكات والباقات</button>
+ </div>
+ <div class="sidefoot">نسخة تجريبية محلية<br>البيانات محفوظة على هذا المتصفح فقط</div>
 </aside>
-
-<main class="main">
-<header class="top">
-<div>
-<h2 id="pageTitle">لوحة التحكم</h2>
-<p>مرحبًا بك في منصة مَدار لإدارة منشأتك</p>
-</div>
-<div class="profile">◉ حساب تجريبي</div>
+<main class="main"><div class="wrap">
+<header class="topbar">
+ <div style="display:flex;gap:10px;align-items:center"><button class="mobilemenu secondary" id="mobilemenu">☰</button><div><h1 id="pageTitle">لوحة التحكم</h1><div class="muted" id="pageSub">نظرة عامة على منشآتك وحجوزاتك</div></div></div>
+ <div class="top-actions"><div class="pill" id="clock">--:--</div><select id="propertyFilter" class="pill" style="width:auto;max-width:190px"><option value="all">جميع المنشآت</option></select><button class="gold" id="quickBooking">+ حجز جديد</button></div>
 </header>
-
-<section id="dashboard" class="page active">
-<div class="welcome">
-<h2>أهلًا بك في مَدار</h2>
-<p>كل أعمال منشأتك في مكان واحد، بإدارة أسهل ورؤية أوضح.</p>
-</div>
-<div class="cards">
-<div class="card"><div class="label">إجمالي الحجوزات</div><div class="number" id="totalBookings">0</div><div class="note">جميع الحجوزات المسجلة</div></div>
-<div class="card"><div class="label">الوحدات والمنشآت</div><div class="number" id="totalUnits">0</div><div class="note">الوحدات المسجلة</div></div>
-<div class="card"><div class="label">العملاء</div><div class="number" id="totalCustomers">0</div><div class="note">العملاء المسجلون</div></div>
-<div class="card"><div class="label">إجمالي الإيرادات</div><div class="number" id="totalIncome">0</div><div class="note">ريال سعودي</div></div>
-</div>
-<div class="panel">
-<div class="panel-head"><h3>آخر الحجوزات</h3><button class="btn light" onclick="showPage('bookings')">عرض الكل</button></div>
-<div class="table-wrap"><table><thead><tr><th>العميل</th><th>الوحدة</th><th>تاريخ الدخول</th><th>المبلغ</th><th>الحالة</th></tr></thead><tbody id="recentBookings"></tbody></table></div>
-</div>
+<section id="page-dashboard">
+ <div class="grid stats" id="stats"></div>
+ <div class="grid cols">
+  <div class="card"><div class="sectionhead" style="margin-top:0"><h2>ملخص الحسابات</h2><span class="muted" id="todayLabel"></span></div><div class="summary" id="moneySummary"></div></div>
+  <div class="card"><div class="sectionhead" style="margin-top:0"><h2>اختصارات سريعة</h2></div><div class="grid" style="grid-template-columns:1fr 1fr"><button id="dashAddUnit">+ إضافة وحدة</button><button class="secondary" id="dashAddCustomer">+ إضافة عميل</button><button class="secondary" id="dashAddExpense">+ إضافة مصروف</button><button class="secondary" id="dashAddProperty">+ إضافة منشأة</button></div><p class="footerhint">يمكنك متابعة جميع منشآتك أو اختيار منشأة واحدة من القائمة العلوية.</p></div>
+ </div>
+ <div class="sectionhead"><h2>أحدث الحجوزات</h2><button class="secondary" data-goto="bookings">عرض جميع الحجوزات</button></div>
+ <div class="card tablewrap"><table><thead><tr><th>العميل</th><th>المنشأة / الوحدة</th><th>الدخول</th><th>الخروج</th><th>الإجمالي</th><th>المدفوع</th><th>المتبقي</th><th>الحالة</th></tr></thead><tbody id="recentBookings"></tbody></table></div>
 </section>
-
-<section id="bookings" class="page">
-<div class="panel">
-<div class="panel-head"><h3>إدارة الحجوزات</h3><button class="btn gold" onclick="document.getElementById('bookingForm').style.display='block'">+ حجز جديد</button></div>
-<div id="bookingForm" style="display:none;margin-bottom:20px">
-<div class="form-grid">
-<div class="field"><label>اسم العميل</label><input id="bCustomer" placeholder="اسم العميل"></div>
-<div class="field"><label>الوحدة</label><select id="bUnit"></select></div>
-<div class="field"><label>تاريخ الدخول</label><input id="bDate" type="date"></div>
-<div class="field"><label>المبلغ (ريال)</label><input id="bAmount" type="number" placeholder="0"></div>
-</div>
-<div class="actions"><button class="btn gold" onclick="addBooking()">حفظ الحجز</button><button class="btn light" onclick="document.getElementById('bookingForm').style.display='none'">إلغاء</button></div>
-</div>
-<div class="table-wrap"><table><thead><tr><th>العميل</th><th>الوحدة</th><th>الدخول</th><th>المبلغ</th><th>الحالة</th></tr></thead><tbody id="bookingRows"></tbody></table></div>
-</div>
+<section id="page-bookings" class="hidden"><div class="toolbar"><input id="bookingSearch" placeholder="بحث باسم العميل أو الوحدة..."><select id="bookingStatus"><option value="all">كل الحالات</option><option>مؤكد</option><option>بانتظار العربون</option><option>مكتمل</option><option>ملغي</option></select><button id="addBooking">+ حجز جديد</button></div><div class="card tablewrap"><table><thead><tr><th>العميل</th><th>المنشأة</th><th>الوحدة</th><th>الدخول</th><th>الخروج</th><th>الإجمالي</th><th>المدفوع</th><th>المتبقي</th><th>الحالة</th><th></th></tr></thead><tbody id="bookingRows"></tbody></table></div></section>
+<section id="page-calendar" class="hidden"><div class="card"><div class="sectionhead" style="margin-top:0"><h2 id="monthTitle">التقويم</h2><div><button class="secondary" id="prevMonth">‹</button> <button class="secondary" id="nextMonth">›</button></div></div><div class="calendar" id="calendar"></div><p class="footerhint">الأيام المظللة بلون ذهبي تحتوي على حجوزات مسجلة.</p></div></section>
+<section id="page-units" class="hidden"><div class="toolbar"><input id="unitSearch" placeholder="بحث عن وحدة..."><button id="addUnit">+ إضافة وحدة</button></div><div class="grid stats" id="unitCards"></div></section>
+<section id="page-customers" class="hidden">
+ <div class="toolbar"><input id="customerSearch" placeholder="بحث عن عميل..."><button id="addCustomer">+ إضافة عميل</button></div>
+ <div class="card tablewrap"><table><thead><tr><th>الاسم</th><th>الجوال</th><th>عدد الحجوزات</th><th>ملاحظات</th></tr></thead><tbody id="customerRows"></tbody></table></div>
 </section>
-
-<section id="units" class="page">
-<div class="panel">
-<div class="panel-head"><h3>الوحدات والمنشآت</h3><button class="btn gold" onclick="document.getElementById('unitForm').style.display='block'">+ إضافة وحدة</button></div>
-<div id="unitForm" style="display:none;margin-bottom:18px">
-<div class="form-grid">
-<div class="field"><label>اسم الوحدة</label><input id="uName" placeholder="مثلاً شاليه النخيل"></div>
-<div class="field"><label>نوع المنشأة</label><select id="uType"><option>شاليه</option><option>استراحة</option><option>شقة مفروشة</option><option>مخيم</option><option>فندق</option><option>غرفة فندقية</option></select></div>
-</div>
-<div class="actions"><button class="btn gold" onclick="addUnit()">حفظ الوحدة</button><button class="btn light" onclick="document.getElementById('unitForm').style.display='none'">إلغاء</button></div>
-</div>
-<div class="table-wrap"><table><thead><tr><th>اسم الوحدة</th><th>النوع</th></tr></thead><tbody id="unitRows"></tbody></table></div>
-</div>
+<section id="page-staff" class="hidden">
+ <div class="toolbar"><button id="addStaff">+ إضافة موظف</button></div>
+ <div class="card tablewrap"><table><thead><tr><th>الموظف</th><th>الجوال</th><th>المنشأة</th><th>الدور</th></tr></thead><tbody id="staffRows"></tbody></table></div>
+ <p class="footerhint">إدارة الصلاحيات هنا نموذج تجريبي. تطبيق الصلاحيات الفعلية يحتاج نظام مستخدمين وخادمًا آمنًا.</p>
 </section>
+<section id="page-contracts" class="hidden">
+ <div class="card"><div class="sectionhead" style="margin-top:0"><h2>قالب العقد</h2><button id="saveContract">حفظ القالب</button></div>
+ <div class="field"><label>نص العقد — يمكنك تعديل القالب</label><textarea id="contractTemplate" rows="9">عقد حجز وحدة ضيافة
 
-<section id="customers" class="page">
-<div class="panel">
-<div class="panel-head"><h3>إدارة العملاء</h3><button class="btn gold" onclick="document.getElementById('customerForm').style.display='block'">+ إضافة عميل</button></div>
-<div id="customerForm" style="display:none;margin-bottom:18px">
-<div class="form-grid">
-<div class="field"><label>اسم العميل</label><input id="cName"></div>
-<div class="field"><label>رقم الجوال</label><input id="cPhone" type="tel"></div>
-</div>
-<div class="actions"><button class="btn gold" onclick="addCustomer()">حفظ العميل</button><button class="btn light" onclick="document.getElementById('customerForm').style.display='none'">إلغاء</button></div>
-</div>
-<div class="table-wrap"><table><thead><tr><th>الاسم</th><th>رقم الجوال</th></tr></thead><tbody id="customerRows"></tbody></table></div>
-</div>
+تم الاتفاق بين الطرف الأول (المنشأة) والطرف الثاني (العميل) على حجز الوحدة الموضحة أدناه.
+
+اسم العميل: {{customer}}
+رقم الجوال: {{phone}}
+المنشأة: {{property}}
+الوحدة: {{unit}}
+تاريخ الدخول: {{start}}
+تاريخ الخروج: {{end}}
+قيمة الحجز: {{total}} ريال
+المبلغ المدفوع: {{paid}} ريال
+المبلغ المتبقي: {{remaining}} ريال
+
+يقر الطرفان بصحة البيانات أعلاه والالتزام بشروط الحجز المتفق عليها.</textarea></div>
+ <p class="footerhint">المتغيرات بين الأقواس تستبدل ببيانات الحجز عند إنشاء العقد.</p>
+ <div class="toolbar"><select id="contractBooking"></select><button id="previewContract">معاينة عقد حجز</button></div>
+ <div id="contractPreview" class="card hidden"></div></div>
 </section>
-
-<section id="contracts" class="page">
-<div class="panel">
-<h3>إدارة العقود</h3>
-<div class="empty">قسم العقود جاهز للتطوير في المرحلة التالية، وسيشمل إنشاء العقود وحفظها وربطها بالحجوزات.</div>
-</div>
+<section id="page-finance" class="hidden">
+ <div class="grid stats" id="financeStats"></div>
+ <div class="sectionhead"><h2>المصروفات المسجلة</h2><button id="addExpense">+ تسجيل مصروف</button></div>
+ <div class="card tablewrap"><table><thead><tr><th>التاريخ</th><th>المنشأة</th><th>البيان</th><th>التصنيف</th><th>المبلغ</th></tr></thead><tbody id="expenseRows"></tbody></table></div>
+ <div class="footerhint">الأرقام المعروضة تعتمد على البيانات التي تدخلها في النموذج، ولا تمثل قوائم مالية محاسبية معتمدة.</div>
 </section>
-
-<section id="finance" class="page">
-<div class="cards">
-<div class="card"><div class="label">الإيرادات</div><div class="number" id="income">0</div><div class="note">ريال سعودي</div></div>
-<div class="card"><div class="label">المصروفات</div><div class="number" id="expenses">0</div><div class="note">ريال سعودي</div></div>
-<div class="card"><div class="label">صافي الفرق</div><div class="number" id="net">0</div><div class="note">ريال سعودي</div></div>
-</div>
-<div class="panel">
-<div class="panel-head"><h3>تسجيل مصروف</h3></div>
-<div class="form-grid">
-<div class="field"><label>بيان المصروف</label><input id="eName" placeholder="مثلاً صيانة"></div>
-<div class="field"><label>المبلغ</label><input id="eAmount" type="number" placeholder="0"></div>
-</div>
-<div class="actions"><button class="btn gold" onclick="addExpense()">حفظ المصروف</button></div>
-</div>
-<div class="panel"><h3>سجل المصروفات</h3><div class="table-wrap"><table><thead><tr><th>البيان</th><th>المبلغ</th></tr></thead><tbody id="expenseRows"></tbody></table></div></div>
+<section id="page-reports" class="hidden">
+ <div class="grid stats" id="reportStats"></div>
+ <div class="card"><h2>ملخص الأداء</h2><div id="reportText" class="muted" style="line-height:2"></div><button id="exportCSV">تصدير الحجوزات CSV</button></div>
 </section>
-
-<section id="reports" class="page">
-<div class="panel">
-<h3>التقارير والإحصائيات</h3>
-<div class="cards" style="margin-top:18px">
-<div class="card"><div class="label">عدد الحجوزات</div><div class="number" id="rBookings">0</div></div>
-<div class="card"><div class="label">عدد العملاء</div><div class="number" id="rCustomers">0</div></div>
-<div class="card"><div class="label">الإيرادات</div><div class="number" id="rIncome">0</div></div>
-<div class="card"><div class="label">المصروفات</div><div class="number" id="rExpenses">0</div></div>
-</div>
-<button class="btn gold" onclick="window.print()">طباعة التقرير</button>
-</div>
+<section id="page-settings" class="hidden">
+ <div class="grid cols">
+ <div class="card"><h2>هوية المنصة</h2><div class="field"><label>اسم المنصة</label><input value="مَدار" disabled></div><div class="field"><label>اللون الأساسي</label><input id="primaryColor" type="color" value="#142b4a"></div><div class="field"><label>اللون الذهبي</label><input id="goldColor" type="color" value="#c8a45d"></div><button id="applyColors">تطبيق الألوان</button></div>
+ <div class="card"><h2>إدارة المنشآت</h2><div class="toolbar"><button id="settingsAddProperty">+ إضافة منشأة</button></div><div id="propertyRows"></div></div>
+ </div>
+ <div class="card" style="margin-top:14px"><h2>النسخ الاحتياطي</h2><p class="muted">احفظ نسخة من بياناتك أو استعد نسخة سابقة على هذا المتصفح.</p><div class="toolbar"><button id="backup">تنزيل نسخة احتياطية</button><label class="pill">استعادة نسخة <input id="restoreFile" type="file" accept=".json,application/json" style="max-width:180px"></label></div></div>
 </section>
-
-<section id="staff" class="page">
-<div class="panel">
-<h3>الموظفون والصلاحيات</h3>
-<div class="empty">سيشمل هذا القسم إضافة الموظفين وتحديد صلاحيات كل مستخدم.</div>
-</div>
+<section id="page-subscriptions" class="hidden">
+ <div class="grid stats">
+ <div class="card"><div class="statlabel">الباقة التجريبية</div><div class="statvalue">تجريبية</div><div class="statnote">بدون دفع في هذا النموذج</div></div>
+ <div class="card"><div class="statlabel">المنشآت</div><div class="statvalue">متعدد</div><div class="statnote">يمكنك إضافة منشآت للتجربة</div></div>
+ <div class="card"><div class="statlabel">حالة الاشتراك</div><div class="statvalue">غير مفعّل</div><div class="statnote">لا توجد مدفوعات فعلية</div></div>
+ <div class="card"><div class="statlabel">الفوترة</div><div class="statvalue">لاحقًا</div><div class="statnote">تحدد بعد اعتماد المنتج</div></div>
+ </div>
+ <div class="card"><h2>إدارة الباقات</h2><p class="muted">هذه شاشة تصورية لإدارة باقات مدار. لا يوجد حاليًا تحصيل اشتراكات أو ربط دفع.</p></div>
 </section>
-
-<section id="settings" class="page">
-<div class="panel">
-<h3>إعدادات المنشأة</h3>
-<div class="notice">هذه نسخة تجريبية. البيانات محفوظة محليًا في المتصفح وليست مناسبة للاستخدام التجاري الحقيقي.</div>
-<div class="form-grid">
-<div class="field"><label>اسم المنشأة</label><input id="businessName" placeholder="اسم منشأتك"></div>
-<div class="field"><label>نوع النشاط</label><select id="businessType"><option>شاليهات</option><option>استراحات</option><option>شقق مفروشة</option><option>مخيمات</option><option>فنادق</option><option>متعدد الأنشطة</option></select></div>
-</div>
-<div class="actions"><button class="btn gold" onclick="saveSettings()">حفظ الإعدادات</button><button class="btn light" onclick="backup()">تصدير نسخة احتياطية</button></div>
-</div>
-</section>
-
-<footer>مَدار MADAR © 2026 — منصة إدارة الضيافة والإقامة</footer>
-</main>
-</div>
-
+</div></main></div>
+<div id="modalRoot"></div>
 <script>
-const get=(key,def=[])=>JSON.parse(localStorage.getItem('madar_'+key)||JSON.stringify(def));
-const put=(key,value)=>localStorage.setItem('madar_'+key,JSON.stringify(value));
-let bookings=get('bookings'),units=get('units'),customers=get('customers'),expenses=get('expenses');
+const $=id=>document.getElementById(id);
+const today=()=>new Date().toISOString().slice(0,10);
+const money=n=>(Number(n)||0).toLocaleString('en-US',{maximumFractionDigits:2});
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const initial={
+ properties:[{id:'p1',name:'منشأتي الأولى'}],
+ units:[],customers:[],bookings:[],staff:[],expenses:[],
+ contract:'',primary:'#142b4a',gold:'#c8a45d'
+};
+let data;
+try{data=JSON.parse(localStorage.getItem('madarData'))||initial}catch(e){data=initial}
+function save(){localStorage.setItem('madarData',JSON.stringify(data));render()}
+function propName(id){return data.properties.find(x=>x.id===id)?.name||'—'}
+function unitName(id){return data.units.find(x=>x.id===id)?.name||'—'}
+function customerName(id){return data.customers.find(x=>x.id===id)?.name||'—'}
+function selectedProperty(){return $('propertyFilter').value}
+function filtered(arr){let p=selectedProperty();return p==='all'?arr:arr.filter(x=>x.propertyId===p)}
+function statusClass(s){return s==='مؤكد'?'ok':s==='ملغي'?'cancel':'wait'}
+function status(s){return `<span class="status ${statusClass(s)}">${s||'مؤكد'}</span>`}
+function page(name){
+ document.querySelectorAll('main section[id^="page-"]').forEach(x=>x.classList.add('hidden'));
+ $('page-'+name).classList.remove('hidden');
+ document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
+ const labels={dashboard:['لوحة التحكم','نظرة عامة على منشآتك وحجوزاتك'],bookings:['الحجوزات','إدارة حجوزات منشآتك'],calendar:['التقويم','متابعة مواعيد الدخول والخروج'],units:['الوحدات','إدارة وحدات الإقامة'],customers:['العملاء','ملفات العملاء وسجل الحجوزات'],staff:['الموظفون والصلاحيات','إدارة فريق العمل'],contracts:['العقود','قوالب عقود الحجز'],finance:['الإدارة المالية','متابعة المبالغ والمصروفات'],reports:['التقارير والإحصائيات','ملخص الأداء التشغيلي'],settings:['مركز التحكم','إعدادات المنشآت والنسخ الاحتياطي'],subscriptions:['الاشتراكات والباقات','إدارة الباقات والخطط']};
+ $('pageTitle').textContent=labels[name][0];$('pageSub').textContent=labels[name][1];
+ $('sidebar').classList.remove('open');
+}
+$('nav').addEventListener('click',e=>{let b=e.target.closest('button[data-page]');if(b)page(b.dataset.page)});
+document.querySelectorAll('[data-goto]').forEach(b=>b.onclick=()=>page(b.dataset.goto));
+$('mobilemenu').onclick=()=>$('sidebar').classList.toggle('open');
+$('propertyFilter').onchange=render;
+$('quickBooking').onclick=()=>bookingForm();
+$('dashAddUnit').onclick=()=>unitForm();
+$('dashAddCustomer').onclick=()=>customerForm();
+$('dashAddExpense').onclick=()=>expenseForm();
+$('dashAddProperty').onclick=()=>propertyForm();
+$('addBooking').onclick=()=>bookingForm();
+$('addUnit').onclick=()=>unitForm();
+$('addCustomer').onclick=()=>customerForm();
+$('addExpense').onclick=()=>expenseForm();
+$('addStaff').onclick=()=>staffForm();
+$('settingsAddProperty').onclick=()=>propertyForm();
 
-function showPage(id,btn){
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active'));
-if(btn)btn.classList.add('active');
-const titles={dashboard:'لوحة التحكم',bookings:'الحجوزات',units:'الوحدات والمنشآت',customers:'العملاء',contracts:'العقود',finance:'الإدارة المالية',reports:'التقارير',staff:'الموظفون',settings:'الإعدادات'};
-document.getElementById('pageTitle').textContent=titles[id];
-render();
+function modal(title,body,submitText,fn){
+ $('modalRoot').innerHTML=`<div class="modalback" id="backdrop"><div class="modal"><div class="modalhead"><h3>${title}</h3><button class="secondary" id="closeModal">✕</button></div><form id="modalForm">${body}<div class="modalactions"><button type="submit">${submitText||'حفظ'}</button><button type="button" class="secondary" id="cancelModal">إلغاء</button></div></form></div></div>`;
+ $('closeModal').onclick=closeModal;$('cancelModal').onclick=closeModal;
+ $('backdrop').onclick=e=>{if(e.target.id==='backdrop')closeModal()};
+ $('modalForm').onsubmit=e=>{e.preventDefault();let fd=Object.fromEntries(new FormData(e.target));fn(fd);closeModal();save()};
 }
-function addBooking(){
-const customer=document.getElementById('bCustomer').value.trim(),unit=document.getElementById('bUnit').value,date=document.getElementById('bDate').value,amount=Number(document.getElementById('bAmount').value);
-if(!customer||!unit||!date||amount<=0)return alert('أكمل جميع بيانات الحجز');
-bookings.unshift({customer,unit,date,amount,status:'مؤكد'});
-put('bookings',bookings);document.getElementById('bookingForm').style.display='none';render();
+function closeModal(){$('modalRoot').innerHTML=''}
+function field(label,name,type='text',value='',extra=''){return `<div class="field"><label>${label}</label><input name="${name}" type="${type}" value="${String(value??'').replace(/"/g,'&quot;')}" ${extra} required></div>`}
+function selectField(label,name,items,selected=''){return `<div class="field"><label>${label}</label><select name="${name}" required>${items.map(x=>`<option value="${x.id}" ${x.id===selected?'selected':''}>${x.name}</option>`).join('')}</select></div>`}
+function propertyForm(){
+ modal('إضافة منشأة',field('اسم المنشأة','name'), 'إضافة',f=>{if(!f.name.trim())return;data.properties.push({id:uid(),name:f.name.trim()})});
 }
-function addUnit(){
-const name=document.getElementById('uName').value.trim(),type=document.getElementById('uType').value;
-if(!name)return alert('اكتب اسم الوحدة');
-units.push({name,type});put('units',units);document.getElementById('unitForm').style.display='none';render();
+function unitForm(){
+ if(!data.properties.length)return alert('أضف منشأة أولاً');
+ modal('إضافة وحدة',`<div class="formgrid">${selectField('المنشأة','propertyId',data.properties)}${field('اسم الوحدة','name')}${field('نوع الوحدة','type','text','استراحة')}${field('السعر الافتراضي لليلة','price','number','0')}</div>`, 'حفظ',f=>data.units.push({id:uid(),...f,price:Number(f.price)}));
 }
-function addCustomer(){
-const name=document.getElementById('cName').value.trim(),phone=document.getElementById('cPhone').value.trim();
-if(!name)return alert('اكتب اسم العميل');
-customers.push({name,phone});put('customers',customers);document.getElementById('customerForm').style.display='none';render();
+function customerForm(){
+ modal('إضافة عميل',`<div class="formgrid">${field('اسم العميل','name')}${field('رقم الجوال','phone','tel') }<div class="field full"><label>ملاحظات</label><textarea name="notes"></textarea></div></div>`,'حفظ',f=>data.customers.push({id:uid(),...f}));
 }
-function addExpense(){
-const name=document.getElementById('eName').value.trim(),amount=Number(document.getElementById('eAmount').value);
-if(!name||amount<=0)return alert('أكمل بيانات المصروف');
-expenses.unshift({name,amount});put('expenses',expenses);document.getElementById('eName').value='';document.getElementById('eAmount').value='';render();
+function staffForm(){
+ modal('إضافة موظف',`<div class="formgrid">${field('اسم الموظف','name')}${field('رقم الجوال','phone','tel')} ${selectField('المنشأة','propertyId',data.properties)}<div class="field"><label>الدور</label><select name="role"><option>مدير</option><option>موظف حجوزات</option><option>استقبال</option><option>محاسبة</option></select></div></div>`,'حفظ',f=>data.staff.push({id:uid(),...f}));
 }
-function saveSettings(){
-put('settings',{name:document.getElementById('businessName').value,type:document.getElementById('businessType').value});
-alert('تم حفظ الإعدادات التجريبية');
+function bookingForm(existing){
+ if(!data.properties.length||!data.units.length||!data.customers.length)return alert('أضف منشأة ووحدة وعميل قبل إنشاء الحجز.');
+ let b=existing||{};
+ const units=data.units.filter(u=>!b.propertyId||u.propertyId===b.propertyId);
+ const body=`<div class="formgrid">${selectField('المنشأة','propertyId',data.properties,b.propertyId||data.properties[0].id)}<div class="field"><label>الوحدة</label><select name="unitId" required>${units.map(u=>`<option value="${u.id}" ${u.id===b.unitId?'selected':''}>${u.name}</option>`).join('')}</select></div>${selectField('العميل','customerId',data.customers,b.customerId||data.customers[0].id)}${field('تاريخ الدخول','start','date',b.start||today())}${field('وقت الدخول','startTime','time',b.startTime||'15:00')}${field('تاريخ الخروج','end','date',b.end||today())}${field('وقت الخروج','endTime','time',b.endTime||'12:00')}${field('إجمالي قيمة الحجز','total','number',b.total||'0')} ${field('المبلغ المدفوع','paid','number',b.paid||'0')}<div class="field"><label>حالة الحجز</label><select name="status"><option ${b.status==='مؤكد'?'selected':''}>مؤكد</option><option ${b.status==='بانتظار العربون'?'selected':''}>بانتظار العربون</option><option ${b.status==='مكتمل'?'selected':''}>مكتمل</option><option ${b.status==='ملغي'?'selected':''}>ملغي</option></select></div><div class="field full"><label>ملاحظات</label><textarea name="notes">${b.notes||''}</textarea></div></div>`;
+ modal(existing?'تعديل الحجز':'إضافة حجز جديد',body,'حفظ الحجز',f=>{
+  let item={...f,id:existing?existing.id:uid(),total:Number(f.total),paid:Number(f.paid)};
+  if(item.end<item.start)return alert('تاريخ الخروج يجب أن يكون بعد تاريخ الدخول.');
+  if(item.paid>item.total)return alert('المبلغ المدفوع لا يمكن أن يتجاوز إجمالي الحجز.');
+  if(existing)data.bookings=data.bookings.map(x=>x.id===existing.id?item:x);else data.bookings.push(item);
+ });
 }
-function backup(){
-const data={bookings,units,customers,expenses,settings:get('settings',{})};
-const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='madar-backup.json';a.click();URL.revokeObjectURL(a.href);
+function expenseForm(){
+ if(!data.properties.length)return alert('أضف منشأة أولاً');
+ modal('تسجيل مصروف',`<div class="formgrid">${selectField('المنشأة','propertyId',data.properties)}${field('بيان المصروف','name')}${field('المبلغ','amount','number','0')}${field('التاريخ','date','date',today())}<div class="field"><label>التصنيف</label><select name="category"><option>تشغيل</option><option>صيانة</option><option>رواتب</option><option>مشتريات</option><option>أخرى</option></select></div></div>`,'تسجيل',f=>data.expenses.push({id:uid(),...f,amount:Number(f.amount)}));
 }
-function money(n){return Number(n||0).toLocaleString('ar-SA')}
+function bookingDetails(id){
+ let b=data.bookings.find(x=>x.id===id);if(!b)return;
+ let remaining=Number(b.total)-Number(b.paid);
+ modal('تفاصيل الحجز',`<div class="summary"><div>العميل<b>${customerName(b.customerId)}</b></div><div>الوحدة<b>${unitName(b.unitId)}</b></div><div>المتبقي<b>${money(remaining)} ر.س</b></div></div><p>المنشأة: ${propName(b.propertyId)}</p><p>الدخول: ${b.start} ${b.startTime||''}</p><p>الخروج: ${b.end} ${b.endTime||''}</p><p>الحالة: ${b.status}</p><p>ملاحظات: ${b.notes||'لا توجد'}</p><div class="toolbar"><button type="button" id="editThis">تعديل الحجز</button><button type="button" class="secondary" id="contractThis">إنشاء العقد</button></div>`,'إغلاق',()=>{});
+ $('modalForm').onsubmit=e=>{e.preventDefault();closeModal()};
+ $('editThis').onclick=()=>{closeModal();bookingForm(b)};
+ $('contractThis').onclick=()=>{closeModal();page('contracts');$('contractBooking').value=id;previewContract()};
+}
 function render(){
-const income=bookings.reduce((s,b)=>s+b.amount,0),cost=expenses.reduce((s,e)=>s+e.amount,0);
-document.getElementById('totalBookings').textContent=money(bookings.length);
-document.getElementById('totalUnits').textContent=money(units.length);
-document.getElementById('totalCustomers').textContent=money(customers.length);
-document.getElementById('totalIncome').textContent=money(income);
-document.getElementById('income').textContent=money(income);
-document.getElementById('expenses').textContent=money(cost);
-document.getElementById('net').textContent=money(income-cost);
-document.getElementById('rBookings').textContent=money(bookings.length);
-document.getElementById('rCustomers').textContent=money(customers.length);
-document.getElementById('rIncome').textContent=money(income);
-document.getElementById('rExpenses').textContent=money(cost);
-const rows=bookings.map(b=>`<tr><td>${escapeHTML(b.customer)}</td><td>${escapeHTML(b.unit)}</td><td>${escapeHTML(b.date)}</td><td>${money(b.amount)} ر.س</td><td><span class="tag">${b.status}</span></td></tr>`).join('')||'<tr><td colspan="5" class="empty">لا توجد حجوزات حتى الآن</td></tr>';
-document.getElementById('bookingRows').innerHTML=rows;
-document.getElementById('recentBookings').innerHTML=rows;
-document.getElementById('unitRows').innerHTML=units.map(u=>`<tr><td>${escapeHTML(u.name)}</td><td>${escapeHTML(u.type)}</td></tr>`).join('')||'<tr><td colspan="2" class="empty">لا توجد وحدات مسجلة</td></tr>';
-document.getElementById('customerRows').innerHTML=customers.map(c=>`<tr><td>${escapeHTML(c.name)}</td><td>${escapeHTML(c.phone)}</td></tr>`).join('')||'<tr><td colspan="2" class="empty">لا يوجد عملاء مسجلون</td></tr>';
-document.getElementById('expenseRows').innerHTML=expenses.map(e=>`<tr><td>${escapeHTML(e.name)}</td><td>${money(e.amount)} ر.س</td></tr>`).join('')||'<tr><td colspan="2" class="empty">لا توجد مصروفات</td></tr>';
-document.getElementById('bUnit').innerHTML=units.map(u=>`<option>${escapeHTML(u.name)}</option>`).join('');
+ $('propertyFilter').innerHTML='<option value="all">جميع المنشآت</option>'+data.properties.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+ let p=selectedProperty();$('propertyFilter').value=p==='all'||data.properties.some(x=>x.id===p)?p:'all';
+ let bookings=filtered(data.bookings),units=filtered(data.units),expenses=filtered(data.expenses);
+ let total=bookings.reduce((s,b)=>s+Number(b.total||0),0),paid=bookings.reduce((s,b)=>s+Number(b.paid||0),0),remaining=total-paid,exp=expenses.reduce((s,x)=>s+Number(x.amount||0),0);
+ let cards=[['الحجوزات',bookings.length,'إجمالي الحجوزات المسجلة'],['الوحدات',units.length,'الوحدات المسجلة'],['العملاء',data.customers.length,'ملفات العملاء'],['إجمالي الحجوزات',money(total)+' ر.س','قيمة الحجوزات'],['المبالغ المحصلة',money(paid)+' ر.س','المبالغ المدفوعة'],['المبالغ المتبقية',money(remaining)+' ر.س','المبالغ غير المحصلة'],['المصروفات',money(exp)+' ر.س','المصروفات المسجلة'],['صافي الدخل المسجل',money(paid-exp)+' ر.س','المحصل ناقص المصروفات']];
+ $('stats').innerHTML=cards.map(x=>`<div class="card"><div class="statlabel">${x[0]}</div><div class="statvalue">${x[1]}</div><div class="statnote">${x[2]}</div></div>`).join('');
+ $('moneySummary').innerHTML=[['قيمة الحجوزات',total],['المبالغ المدفوعة',paid],['المبالغ المتبقية',remaining]].map(x=>`<div>${x[0]}<b>${money(x[1])} ر.س</b></div>`).join('');
+ $('todayLabel').textContent=today();
+ $('recentBookings').innerHTML=bookings.slice(-5).reverse().map(b=>`<tr><td>${customerName(b.customerId)}</td><td>${propName(b.propertyId)} / ${unitName(b.unitId)}</td><td>${b.start}</td><td>${b.end}</td><td>${money(b.total)}</td><td>${money(b.paid)}</td><td>${money(b.total-b.paid)}</td><td>${status(b.status)}</td></tr>`).join('')||'<tr><td colspan="8" class="empty">لا توجد حجوزات بعد</td></tr>';
+ let search=$('bookingSearch')?.value?.toLowerCase()||'',st=$('bookingStatus')?.value||'all';
+ $('bookingRows').innerHTML=bookings.filter(b=>(st==='all'||b.status===st)&&(`${customerName(b.customerId)} ${unitName(b.unitId)}`).toLowerCase().includes(search)).map(b=>`<tr><td>${customerName(b.customerId)}</td><td>${propName(b.propertyId)}</td><td>${unitName(b.unitId)}</td><td>${b.start} ${b.startTime||''}</td><td>${b.end} ${b.endTime||''}</td><td>${money(b.total)}</td><td>${money(b.paid)}</td><td>${money(b.total-b.paid)}</td><td>${status(b.status)}</td><td><button class="secondary" onclick="bookingDetails('${b.id}')">تفاصيل</button></td></tr>`).join('')||'<tr><td colspan="10" class="empty">لا توجد نتائج</td></tr>';
+ $('unitCards').innerHTML=units.map(u=>`<div class="card"><b>${u.name}</b><p class="muted">${propName(u.propertyId)}</p><p>${u.type||'وحدة'} · ${money(u.price)} ر.س لليلة</p></div>`).join('')||'<div class="card empty">لا توجد وحدات مسجلة</div>';
+ $('customerRows').innerHTML=data.customers.map(c=>`<tr><td>${c.name}</td><td>${c.phone||'—'}</td><td>${data.bookings.filter(b=>b.customerId===c.id).length}</td><td>${c.notes||'—'}</td></tr>`).join('')||'<tr><td colspan="4" class="empty">لا يوجد عملاء</td></tr>';
+ $('staffRows').innerHTML=data.staff.map(s=>`<tr><td>${s.name}</td><td>${s.phone}</td><td>${propName(s.propertyId)}</td><td>${s.role}</td></tr>`).join('')||'<tr><td colspan="4" class="empty">لا يوجد موظفون</td></tr>';
+ $('expenseRows').innerHTML=expenses.map(x=>`<tr><td>${x.date}</td><td>${propName(x.propertyId)}</td><td>${x.name}</td><td>${x.category}</td><td>${money(x.amount)} ر.س</td></tr>`).join('')||'<tr><td colspan="5" class="empty">لا توجد مصروفات</td></tr>';
+ $('financeStats').innerHTML=[['إجمالي الحجوزات',total],['المبالغ المحصلة',paid],['المبالغ المتبقية',remaining],['المصروفات',exp]].map(x=>`<div class="card"><div class="statlabel">${x[0]}</div><div class="statvalue">${money(x[1])} ر.س</div></div>`).join('');
+ $('reportStats').innerHTML=[['عدد الحجوزات',bookings.length],['عدد الوحدات',units.length],['المحصل',money(paid)+' ر.س'],['صافي الدخل المسجل',money(paid-exp)+' ر.س']].map(x=>`<div class="card"><div class="statlabel">${x[0]}</div><div class="statvalue">${x[1]}</div></div>`).join('');
+ $('reportText').textContent=`لديك ${bookings.length} حجزًا مسجلًا، بإجمالي مبالغ ${money(total)} ريال، تم تحصيل ${money(paid)} ريال منها، والمتبقي ${money(remaining)} ريال. المصروفات المسجلة ${money(exp)} ريال.`;
+ $('propertyRows').innerHTML=data.properties.map(x=>`<div class="pill" style="margin:8px 0">${x.name}</div>`).join('')||'لا توجد منشآت';
+ $('contractBooking').innerHTML='<option value="">اختر حجزًا</option>'+data.bookings.map(b=>`<option value="${b.id}">${customerName(b.customerId)} — ${b.start}</option>`).join('');
+ $('contractTemplate').value=data.contract||$('contractTemplate').value;
+ $('primaryColor').value=data.primary;$('goldColor').value=data.gold;
+ renderCalendar();
 }
-function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('bookingSearch').oninput=render;$('bookingStatus').onchange=render;
+$('unitSearch').oninput=()=>{let v=$('unitSearch').value.toLowerCase();document.querySelectorAll('#unitCards .card').forEach(x=>x.classList.toggle('hidden',!x.textContent.toLowerCase().includes(v)))};
+$('customerSearch').oninput=()=>{let v=$('customerSearch').value.toLowerCase();document.querySelectorAll('#customerRows tr').forEach(x=>x.classList.toggle('hidden',!x.textContent.toLowerCase().includes(v)))};
+let month=new Date();
+function renderCalendar(){
+ let y=month.getFullYear(),m=month.getMonth();$('monthTitle').textContent=month.toLocaleDateString('ar-SA',{month:'long',year:'numeric'});
+ let first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate(),names=['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+ $('calendar').innerHTML=names.map(n=>`<div class="muted" style="text-align:center;padding:7px">${n}</div>`).join('');
+ for(let i=0;i<first;i++)$('calendar').innerHTML+='<div></div>';
+ for(let d=1;d<=days;d++){
+  let date=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  let matches=filtered(data.bookings).filter(b=>b.start<=date&&b.end>=date&&b.status!=='ملغي');
+  $('calendar').innerHTML+=`<div class="day ${matches.length?'booked':''} ${date===today()?'today':''}"><b>${d}</b>${matches.map(b=>`<small>${customerName(b.customerId)}</small>`).join('')}</div>`;
+ }
+}
+$('prevMonth').onclick=()=>{month.setMonth(month.getMonth()-1);renderCalendar()};
+$('nextMonth').onclick=()=>{month.setMonth(month.getMonth()+1);renderCalendar()};
+$('saveContract').onclick=()=>{data.contract=$('contractTemplate').value;localStorage.setItem('madarData',JSON.stringify(data));alert('تم حفظ قالب العقد على هذا المتصفح')};
+function previewContract(){
+ let b=data.bookings.find(x=>x.id===$('contractBooking').value);if(!b)return alert('اختر حجزًا أولاً');
+ let t=$('contractTemplate').value||data.contract;
+ let vals={customer:customerName(b.customerId),phone:data.customers.find(x=>x.id===b.customerId)?.phone||'',property:propName(b.propertyId),unit:unitName(b.unitId),start:b.start+' '+(b.startTime||''),end:b.end+' '+(b.endTime||''),total:money(b.total),paid:money(b.paid),remaining:money(b.total-b.paid)};
+ let html=t.replace(/\{\{(\w+)\}\}/g,(m,k)=>vals[k]||'');
+ $('contractPreview').classList.remove('hidden');
+ $('contractPreview').innerHTML=`<pre style="white-space:pre-wrap;font-family:Tahoma;line-height:2">${html.replace(/</g,'&lt;')}</pre><button onclick="window.print()">طباعة العقد</button>`;
+}
+$('previewContract').onclick=previewContract;
+$('applyColors').onclick=()=>{data.primary=$('primaryColor').value;data.gold=$('goldColor').value;document.documentElement.style.setProperty('--navy',data.primary);document.documentElement.style.setProperty('--gold',data.gold);localStorage.setItem('madarData',JSON.stringify(data));alert('تم تطبيق الألوان')};
+$('backup').onclick=()=>{let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='madar-backup.json';a.click();URL.revokeObjectURL(a.href)};
+$('restoreFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let obj=JSON.parse(await f.text());if(!obj.properties||!obj.bookings)throw Error();data=obj;save();alert('تم استعادة النسخة')}catch(err){alert('ملف النسخة غير صالح')}};
+$('exportCSV').onclick=()=>{let rows=[['العميل','المنشأة','الوحدة','الدخول','الخروج','الإجمالي','المدفوع','المتبقي','الحالة'],...filtered(data.bookings).map(b=>[customerName(b.customerId),propName(b.propertyId),unitName(b.unitId),b.start,b.end,b.total,b.paid,b.total-b.paid,b.status])];let csv='\ufeff'+rows.map(r=>r.map(x=>'"'+String(x??'').replace(/"/g,'""')+'"').join(',')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='madar-bookings.csv';a.click();URL.revokeObjectURL(a.href)};
+function clock(){let d=new Date();$('clock').textContent=d.toLocaleDateString('ar-SA')+' · '+d.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'})}
+setInterval(clock,1000);clock();
+document.documentElement.style.setProperty('--navy',data.primary||'#142b4a');
+document.documentElement.style.setProperty('--gold',data.gold||'#c8a45d');
 render();
 </script>
-</body>
-</html>
+</body></html>
