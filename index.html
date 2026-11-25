@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مَدار | إدارة الضيافة</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
+:root{--navy:#101e35;--gold:#c6a66b;--bg:#f4f6f9;--white:#fff;--text:#202d40;--muted:#8993a2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Sans Arabic',sans-serif}
+button,input,select{font-family:inherit}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:245px;background:var(--navy);color:white;padding:24px 16px;flex-shrink:0}
+.brand{text-align:center;padding:12px 0 28px;border-bottom:1px solid #ffffff20}
+.brand h1{font-size:34px;margin:0;color:var(--gold);letter-spacing:2px}
+.brand p{font-size:11px;color:#c5ccd5;margin:4px}
+.menu{margin-top:22px}
+.menu button{width:100%;border:0;background:none;color:#d0d7e2;text-align:right;padding:12px;border-radius:9px;margin:3px 0;cursor:pointer;font-size:14px}
+.menu button.active,.menu button:hover{background:#ffffff17;color:var(--gold)}
+.menu small{display:block;color:#8e9aab;margin:20px 10px 8px}
+.main{flex:1;min-width:0;padding:25px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:26px}
+.top h2{margin:0;font-size:23px}
+.top p{margin:4px 0;color:var(--muted);font-size:12px}
+.profile{background:white;border-radius:12px;padding:10px 14px;font-size:12px}
+.welcome{background:linear-gradient(115deg,#101e35,#253c5c);color:white;padding:24px;border-radius:16px;margin-bottom:22px}
+.welcome h2{margin:0 0 7px;color:var(--gold)}
+.welcome p{margin:0;color:#d0d8e3;font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:22px}
+.card{background:white;border:1px solid #e9edf2;border-radius:13px;padding:18px}
+.card .label{font-size:12px;color:var(--muted)}
+.card .number{font-size:25px;font-weight:700;margin:9px 0}
+.card .note{font-size:11px;color:#84909e}
+.panel{background:white;border:1px solid #e9edf2;border-radius:14px;padding:19px;margin-bottom:18px}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}
+.panel h3{font-size:16px;margin:0}
+.btn{border:0;border-radius:8px;background:var(--navy);color:white;padding:10px 15px;cursor:pointer;font-size:12px}
+.btn.gold{background:var(--gold);color:#172238}
+.btn.light{background:#edf0f4;color:var(--navy)}
+table{width:100%;border-collapse:collapse;min-width:520px}
+th,td{text-align:right;padding:12px 9px;border-bottom:1px solid #edf0f3;font-size:12px}
+th{color:var(--muted);font-weight:500;background:#fafbfd}
+.table-wrap{overflow-x:auto}
+.tag{background:#e9f5ed;color:#27834b;padding:5px 9px;border-radius:20px;font-size:10px}
+.page{display:none}
+.page.active{display:block}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.field label{display:block;font-size:12px;margin-bottom:6px;color:#667184}
+.field input,.field select{width:100%;padding:11px;border:1px solid #dfe4eb;border-radius:8px;background:white}
+.field.full{grid-column:1/-1}
+.actions{display:flex;gap:8px;margin-top:16px}
+.empty{text-align:center;padding:30px;color:var(--muted);font-size:13px}
+.notice{font-size:12px;color:#8a6c32;background:#fff8e8;padding:12px;border-radius:9px;margin-bottom:15px}
+.mobile-menu{display:none}
+footer{text-align:center;color:#9aa3ae;font-size:11px;padding:20px}
+@media(max-width:850px){
+.sidebar{width:190px;padding:16px 10px}
+.main{padding:17px}
+.cards{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+.layout{display:block}
+.sidebar{width:100%;padding:10px 12px}
+.brand{display:flex;align-items:center;justify-content:space-between;padding:4px 8px;border:0}
+.brand h1{font-size:26px}
+.brand p{display:none}
+.menu{display:flex;overflow-x:auto;margin:8px 0 0;gap:5px}
+.menu button{white-space:nowrap;width:auto;padding:9px 12px;font-size:12px}
+.menu small{display:none}
+.main{padding:15px}
+.top h2{font-size:19px}
+.cards{gap:9px}
+.card{padding:13px}
+.card .number{font-size:21px}
+.form-grid{grid-template-columns:1fr}
+.field.full{grid-column:auto}
+.welcome{padding:19px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="brand">
+<h1>مَدار</h1>
+<p>منصة إدارة الضيافة والإقامة</p>
+</div>
+<nav class="menu">
+<small>القائمة الرئيسية</small>
+<button class="active" onclick="showPage('dashboard',this)">⌂ لوحة التحكم</button>
+<button onclick="showPage('bookings',this)">▦ الحجوزات</button>
+<button onclick="showPage('units',this)">⌂ الوحدات والمنشآت</button>
+<button onclick="showPage('customers',this)">♙ العملاء</button>
+<button onclick="showPage('contracts',this)">▤ العقود</button>
+<small>الإدارة المالية</small>
+<button onclick="showPage('finance',this)">◈ المالية</button>
+<button onclick="showPage('reports',this)">▥ التقارير</button>
+<small>إدارة النظام</small>
+<button onclick="showPage('staff',this)">♙ الموظفون</button>
+<button onclick="showPage('settings',this)">⚙ الإعدادات</button>
+</nav>
+</aside>
+
+<main class="main">
+<header class="top">
+<div>
+<h2 id="pageTitle">لوحة التحكم</h2>
+<p>مرحبًا بك في منصة مَدار لإدارة منشأتك</p>
+</div>
+<div class="profile">◉ حساب تجريبي</div>
+</header>
+
+<section id="dashboard" class="page active">
+<div class="welcome">
+<h2>أهلًا بك في مَدار</h2>
+<p>كل أعمال منشأتك في مكان واحد، بإدارة أسهل ورؤية أوضح.</p>
+</div>
+<div class="cards">
+<div class="card"><div class="label">إجمالي الحجوزات</div><div class="number" id="totalBookings">0</div><div class="note">جميع الحجوزات المسجلة</div></div>
+<div class="card"><div class="label">الوحدات والمنشآت</div><div class="number" id="totalUnits">0</div><div class="note">الوحدات المسجلة</div></div>
+<div class="card"><div class="label">العملاء</div><div class="number" id="totalCustomers">0</div><div class="note">العملاء المسجلون</div></div>
+<div class="card"><div class="label">إجمالي الإيرادات</div><div class="number" id="totalIncome">0</div><div class="note">ريال سعودي</div></div>
+</div>
+<div class="panel">
+<div class="panel-head"><h3>آخر الحجوزات</h3><button class="btn light" onclick="showPage('bookings')">عرض الكل</button></div>
+<div class="table-wrap"><table><thead><tr><th>العميل</th><th>الوحدة</th><th>تاريخ الدخول</th><th>المبلغ</th><th>الحالة</th></tr></thead><tbody id="recentBookings"></tbody></table></div>
+</div>
+</section>
+
+<section id="bookings" class="page">
+<div class="panel">
+<div class="panel-head"><h3>إدارة الحجوزات</h3><button class="btn gold" onclick="document.getElementById('bookingForm').style.display='block'">+ حجز جديد</button></div>
+<div id="bookingForm" style="display:none;margin-bottom:20px">
+<div class="form-grid">
+<div class="field"><label>اسم العميل</label><input id="bCustomer" placeholder="اسم العميل"></div>
+<div class="field"><label>الوحدة</label><select id="bUnit"></select></div>
+<div class="field"><label>تاريخ الدخول</label><input id="bDate" type="date"></div>
+<div class="field"><label>المبلغ (ريال)</label><input id="bAmount" type="number" placeholder="0"></div>
+</div>
+<div class="actions"><button class="btn gold" onclick="addBooking()">حفظ الحجز</button><button class="btn light" onclick="document.getElementById('bookingForm').style.display='none'">إلغاء</button></div>
+</div>
+<div class="table-wrap"><table><thead><tr><th>العميل</th><th>الوحدة</th><th>الدخول</th><th>المبلغ</th><th>الحالة</th></tr></thead><tbody id="bookingRows"></tbody></table></div>
+</div>
+</section>
+
+<section id="units" class="page">
+<div class="panel">
+<div class="panel-head"><h3>الوحدات والمنشآت</h3><button class="btn gold" onclick="document.getElementById('unitForm').style.display='block'">+ إضافة وحدة</button></div>
+<div id="unitForm" style="display:none;margin-bottom:18px">
+<div class="form-grid">
+<div class="field"><label>اسم الوحدة</label><input id="uName" placeholder="مثلاً شاليه النخيل"></div>
+<div class="field"><label>نوع المنشأة</label><select id="uType"><option>شاليه</option><option>استراحة</option><option>شقة مفروشة</option><option>مخيم</option><option>فندق</option><option>غرفة فندقية</option></select></div>
+</div>
+<div class="actions"><button class="btn gold" onclick="addUnit()">حفظ الوحدة</button><button class="btn light" onclick="document.getElementById('unitForm').style.display='none'">إلغاء</button></div>
+</div>
+<div class="table-wrap"><table><thead><tr><th>اسم الوحدة</th><th>النوع</th></tr></thead><tbody id="unitRows"></tbody></table></div>
+</div>
+</section>
+
+<section id="customers" class="page">
+<div class="panel">
+<div class="panel-head"><h3>إدارة العملاء</h3><button class="btn gold" onclick="document.getElementById('customerForm').style.display='block'">+ إضافة عميل</button></div>
+<div id="customerForm" style="display:none;margin-bottom:18px">
+<div class="form-grid">
+<div class="field"><label>اسم العميل</label><input id="cName"></div>
+<div class="field"><label>رقم الجوال</label><input id="cPhone" type="tel"></div>
+</div>
+<div class="actions"><button class="btn gold" onclick="addCustomer()">حفظ العميل</button><button class="btn light" onclick="document.getElementById('customerForm').style.display='none'">إلغاء</button></div>
+</div>
+<div class="table-wrap"><table><thead><tr><th>الاسم</th><th>رقم الجوال</th></tr></thead><tbody id="customerRows"></tbody></table></div>
+</div>
+</section>
+
+<section id="contracts" class="page">
+<div class="panel">
+<h3>إدارة العقود</h3>
+<div class="empty">قسم العقود جاهز للتطوير في المرحلة التالية، وسيشمل إنشاء العقود وحفظها وربطها بالحجوزات.</div>
+</div>
+</section>
+
+<section id="finance" class="page">
+<div class="cards">
+<div class="card"><div class="label">الإيرادات</div><div class="number" id="income">0</div><div class="note">ريال سعودي</div></div>
+<div class="card"><div class="label">المصروفات</div><div class="number" id="expenses">0</div><div class="note">ريال سعودي</div></div>
+<div class="card"><div class="label">صافي الفرق</div><div class="number" id="net">0</div><div class="note">ريال سعودي</div></div>
+</div>
+<div class="panel">
+<div class="panel-head"><h3>تسجيل مصروف</h3></div>
+<div class="form-grid">
+<div class="field"><label>بيان المصروف</label><input id="eName" placeholder="مثلاً صيانة"></div>
+<div class="field"><label>المبلغ</label><input id="eAmount" type="number" placeholder="0"></div>
+</div>
+<div class="actions"><button class="btn gold" onclick="addExpense()">حفظ المصروف</button></div>
+</div>
+<div class="panel"><h3>سجل المصروفات</h3><div class="table-wrap"><table><thead><tr><th>البيان</th><th>المبلغ</th></tr></thead><tbody id="expenseRows"></tbody></table></div></div>
+</section>
+
+<section id="reports" class="page">
+<div class="panel">
+<h3>التقارير والإحصائيات</h3>
+<div class="cards" style="margin-top:18px">
+<div class="card"><div class="label">عدد الحجوزات</div><div class="number" id="rBookings">0</div></div>
+<div class="card"><div class="label">عدد العملاء</div><div class="number" id="rCustomers">0</div></div>
+<div class="card"><div class="label">الإيرادات</div><div class="number" id="rIncome">0</div></div>
+<div class="card"><div class="label">المصروفات</div><div class="number" id="rExpenses">0</div></div>
+</div>
+<button class="btn gold" onclick="window.print()">طباعة التقرير</button>
+</div>
+</section>
+
+<section id="staff" class="page">
+<div class="panel">
+<h3>الموظفون والصلاحيات</h3>
+<div class="empty">سيشمل هذا القسم إضافة الموظفين وتحديد صلاحيات كل مستخدم.</div>
+</div>
+</section>
+
+<section id="settings" class="page">
+<div class="panel">
+<h3>إعدادات المنشأة</h3>
+<div class="notice">هذه نسخة تجريبية. البيانات محفوظة محليًا في المتصفح وليست مناسبة للاستخدام التجاري الحقيقي.</div>
+<div class="form-grid">
+<div class="field"><label>اسم المنشأة</label><input id="businessName" placeholder="اسم منشأتك"></div>
+<div class="field"><label>نوع النشاط</label><select id="businessType"><option>شاليهات</option><option>استراحات</option><option>شقق مفروشة</option><option>مخيمات</option><option>فنادق</option><option>متعدد الأنشطة</option></select></div>
+</div>
+<div class="actions"><button class="btn gold" onclick="saveSettings()">حفظ الإعدادات</button><button class="btn light" onclick="backup()">تصدير نسخة احتياطية</button></div>
+</div>
+</section>
+
+<footer>مَدار MADAR © 2026 — منصة إدارة الضيافة والإقامة</footer>
+</main>
+</div>
+
+<script>
+const get=(key,def=[])=>JSON.parse(localStorage.getItem('madar_'+key)||JSON.stringify(def));
+const put=(key,value)=>localStorage.setItem('madar_'+key,JSON.stringify(value));
+let bookings=get('bookings'),units=get('units'),customers=get('customers'),expenses=get('expenses');
+
+function showPage(id,btn){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active'));
+if(btn)btn.classList.add('active');
+const titles={dashboard:'لوحة التحكم',bookings:'الحجوزات',units:'الوحدات والمنشآت',customers:'العملاء',contracts:'العقود',finance:'الإدارة المالية',reports:'التقارير',staff:'الموظفون',settings:'الإعدادات'};
+document.getElementById('pageTitle').textContent=titles[id];
+render();
+}
+function addBooking(){
+const customer=document.getElementById('bCustomer').value.trim(),unit=document.getElementById('bUnit').value,date=document.getElementById('bDate').value,amount=Number(document.getElementById('bAmount').value);
+if(!customer||!unit||!date||amount<=0)return alert('أكمل جميع بيانات الحجز');
+bookings.unshift({customer,unit,date,amount,status:'مؤكد'});
+put('bookings',bookings);document.getElementById('bookingForm').style.display='none';render();
+}
+function addUnit(){
+const name=document.getElementById('uName').value.trim(),type=document.getElementById('uType').value;
+if(!name)return alert('اكتب اسم الوحدة');
+units.push({name,type});put('units',units);document.getElementById('unitForm').style.display='none';render();
+}
+function addCustomer(){
+const name=document.getElementById('cName').value.trim(),phone=document.getElementById('cPhone').value.trim();
+if(!name)return alert('اكتب اسم العميل');
+customers.push({name,phone});put('customers',customers);document.getElementById('customerForm').style.display='none';render();
+}
+function addExpense(){
+const name=document.getElementById('eName').value.trim(),amount=Number(document.getElementById('eAmount').value);
+if(!name||amount<=0)return alert('أكمل بيانات المصروف');
+expenses.unshift({name,amount});put('expenses',expenses);document.getElementById('eName').value='';document.getElementById('eAmount').value='';render();
+}
+function saveSettings(){
+put('settings',{name:document.getElementById('businessName').value,type:document.getElementById('businessType').value});
+alert('تم حفظ الإعدادات التجريبية');
+}
+function backup(){
+const data={bookings,units,customers,expenses,settings:get('settings',{})};
+const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='madar-backup.json';a.click();URL.revokeObjectURL(a.href);
+}
+function money(n){return Number(n||0).toLocaleString('ar-SA')}
+function render(){
+const income=bookings.reduce((s,b)=>s+b.amount,0),cost=expenses.reduce((s,e)=>s+e.amount,0);
+document.getElementById('totalBookings').textContent=money(bookings.length);
+document.getElementById('totalUnits').textContent=money(units.length);
+document.getElementById('totalCustomers').textContent=money(customers.length);
+document.getElementById('totalIncome').textContent=money(income);
+document.getElementById('income').textContent=money(income);
+document.getElementById('expenses').textContent=money(cost);
+document.getElementById('net').textContent=money(income-cost);
+document.getElementById('rBookings').textContent=money(bookings.length);
+document.getElementById('rCustomers').textContent=money(customers.length);
+document.getElementById('rIncome').textContent=money(income);
+document.getElementById('rExpenses').textContent=money(cost);
+const rows=bookings.map(b=>`<tr><td>${escapeHTML(b.customer)}</td><td>${escapeHTML(b.unit)}</td><td>${escapeHTML(b.date)}</td><td>${money(b.amount)} ر.س</td><td><span class="tag">${b.status}</span></td></tr>`).join('')||'<tr><td colspan="5" class="empty">لا توجد حجوزات حتى الآن</td></tr>';
+document.getElementById('bookingRows').innerHTML=rows;
+document.getElementById('recentBookings').innerHTML=rows;
+document.getElementById('unitRows').innerHTML=units.map(u=>`<tr><td>${escapeHTML(u.name)}</td><td>${escapeHTML(u.type)}</td></tr>`).join('')||'<tr><td colspan="2" class="empty">لا توجد وحدات مسجلة</td></tr>';
+document.getElementById('customerRows').innerHTML=customers.map(c=>`<tr><td>${escapeHTML(c.name)}</td><td>${escapeHTML(c.phone)}</td></tr>`).join('')||'<tr><td colspan="2" class="empty">لا يوجد عملاء مسجلون</td></tr>';
+document.getElementById('expenseRows').innerHTML=expenses.map(e=>`<tr><td>${escapeHTML(e.name)}</td><td>${money(e.amount)} ر.س</td></tr>`).join('')||'<tr><td colspan="2" class="empty">لا توجد مصروفات</td></tr>';
+document.getElementById('bUnit').innerHTML=units.map(u=>`<option>${escapeHTML(u.name)}</option>`).join('');
+}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+render();
+</script>
+</body>
+</html>
