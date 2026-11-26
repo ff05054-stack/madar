@@ -247,18 +247,7 @@ textarea{resize:vertical;min-height:60px;}
 <body>
 
 
-‏<div id="app">
-  <div class="topbar">
-    <div class="side">
-      <button class="icon-btn" onclick="toggleDrawer(true)">☰</button>
-      <div class="avatar-circ">🏝️</div>
-      <div>
-        <h1 id="chaletTitle">مَدار</h1>
-        <div class="sub">إدارة الشاليه</div>
-      </div>
-    </div>
-    <div class="side">
-      <button class="icon-btn" onclick="openSearch()">🔍</button>
+  onclick="openSearch()">🔍</button>
       <button class="icon-btn" onclick="openNotifications()">🔔<span class="dot-badge" id="notifDot" style="display:none;"></span></button>
     </div>
   </div>
@@ -1099,37 +1088,7 @@ async function initApp(){
   renderLoginGateAccounts();
 }
 
-function renderLoginGateAccounts(){
-  const wrap = document.getElementById('loginSavedAccounts');
-  if(!wrap) return;
-  const accounts = getSavedAccounts().sort((a,b)=>(b.lastUsed||0)-(a.lastUsed||0));
-  if(accounts.length===0){ wrap.innerHTML=''; return; }
-  wrap.innerHTML = `<div style="font-size:11.5px;color:var(--ink-soft);margin-bottom:6px;">حساباتك المحفوظة على هالجهاز:</div>` +
-    accounts.map(a=>`<div class="list-row"><span style="font-size:13px;">📱 ${escapeHtml(a.phoneDisplay||a.key)}</span><button class="mini-btn primary" onclick="quickSwitchFromGate('${a.key}')">دخول</button></div>`).join('') +
-    `<div style="height:14px;"></div>`;
-}
-async function quickSwitchFromGate(key){
-  const accounts = getSavedAccounts();
-  const acc = accounts.find(a=>a.key===key);
-  if(!acc) return;
-  const errEl = document.getElementById('loginError');
-  errEl.classList.remove('show');
-  try{
-    const rec = await sharedGet(key);
-    if(!rec){ errEl.textContent='تعذر إيجاد هذا الحساب'; errEl.classList.add('show'); return; }
-    const parsed = JSON.parse(rec.value);
-    if(parsed.pin !== acc.pin){ errEl.textContent='تغيّر رمز هذا الحساب، سجّل دخول يدويًا'; errEl.classList.add('show'); return; }
-    data = deepMerge(data, parsed.data||{});
-    currentAccountKey = key;
-    currentAccountPin = acc.pin;
-    upsertSavedAccount(acc);
-    document.getElementById('loginGate').style.display='none';
-    renderEverything();
-    showToast('تم تسجيل الدخول');
-  }catch(e){ errEl.textContent='تعذر الاتصال، حاول مرة أخرى'; errEl.classList.add('show'); }
-}
-
-async function doLogin(){
+‏async function doLogin(){
   const phoneRaw = document.getElementById('loginPhone').value.trim();
   const pin = document.getElementById('loginPin').value.trim();
   const errEl = document.getElementById('loginError');
