@@ -3,14 +3,16 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>مَدار | MADAR</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
 :root{
- --bg:#f5f4f0;--card:#fff;--dark:#173b38;--main:#245a53;
- --gold:#b99a61;--text:#263735;--muted:#899390;
- --border:#e9ece8;--red:#b94d4d;--green:#34836a;
+--dark:#173b38;--main:#245a53;--gold:#b99a61;
+--bg:#f5f4f0;--white:#fff;--text:#263735;
+--muted:#899390;--border:#e9ece8;--red:#b94d4d;
+--green:#34836a
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);font-family:Tajawal,sans-serif;color:var(--text)}
@@ -19,14 +21,14 @@ button{cursor:pointer;border:0}
 .hidden{display:none!important}
 #auth{min-height:100vh;display:grid;place-items:center;padding:20px}
 .auth-card{background:white;width:100%;max-width:420px;padding:30px;border-radius:20px;box-shadow:0 10px 40px #173b3810}
-.logo{font-size:34px;font-weight:800;color:var(--dark);text-align:center}
+.logo{font-size:36px;font-weight:800;color:var(--dark);text-align:center}
 .logo small{display:block;font-size:12px;letter-spacing:5px;color:var(--gold)}
 .sub{text-align:center;color:var(--muted);margin:8px 0 25px}
-input,select{width:100%;padding:13px;border:1px solid var(--border);border-radius:10px;background:#fff;margin:6px 0 14px;font-size:15px;outline:none}
+input,select{width:100%;padding:13px;border:1px solid var(--border);border-radius:10px;background:white;margin:6px 0 14px;font-size:15px;outline:none}
 input:focus,select:focus{border-color:var(--gold)}
 label{font-size:13px;font-weight:700}
 .btn{padding:12px 18px;border-radius:10px;background:var(--dark);color:white;font-weight:700}
-.btn.gold{background:var(--gold);color:#fff}
+.btn.gold{background:var(--gold);color:white}
 .btn.light{background:#edf2ef;color:var(--dark)}
 .btn.danger{background:#fff0f0;color:var(--red)}
 .full{width:100%}
@@ -40,7 +42,7 @@ label{font-size:13px;font-weight:700}
 .nav button{background:transparent;color:#d5e0dc;text-align:right;padding:13px;border-radius:9px;font-size:15px}
 .nav button.active,.nav button:hover{background:#ffffff19;color:white}
 .main{flex:1;min-width:0}
-.topbar{height:72px;background:white;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 25px}
+.topbar{min-height:72px;background:white;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:12px 25px;gap:12px}
 .topbar select{width:auto;min-width:170px;margin:0}
 .content{padding:25px;max-width:1400px;margin:auto}
 .page-title{font-size:25px;font-weight:800;margin:0 0 5px}
@@ -57,24 +59,24 @@ table{width:100%;border-collapse:collapse;min-width:600px}
 th,td{padding:13px 10px;text-align:right;border-bottom:1px solid var(--border);font-size:14px}
 th{color:var(--muted);font-weight:600}
 .empty{text-align:center;color:var(--muted);padding:30px}
-.actions{display:flex;gap:7px;flex-wrap:wrap}
+.actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
 .modal-bg{position:fixed;inset:0;background:#0008;z-index:10;display:grid;place-items:center;padding:15px}
 .modal{background:white;border-radius:17px;padding:24px;width:100%;max-width:470px;max-height:90vh;overflow:auto}
 .modal h3{margin-top:0}
 .modal-actions{display:flex;gap:9px;margin-top:15px}
 .modal-actions button{flex:1}
-.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:var(--dark);color:white;padding:12px 22px;border-radius:12px;z-index:30}
-.badge{padding:5px 9px;border-radius:20px;background:#eaf4ef;color:var(--green);font-size:12px}
+.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:var(--dark);color:white;padding:12px 22px;border-radius:12px;z-index:30;max-width:90%;text-align:center}
 @media(max-width:850px){
- #app{display:block}.sidebar{width:100%;padding:12px}
- .sidebar .logo{margin:0 8px 10px}.nav{flex-direction:row;overflow:auto}
- .nav button{white-space:nowrap;padding:9px 12px}
- .grid{grid-template-columns:repeat(2,1fr)}
- .content{padding:16px}.topbar{padding:0 15px}
+#app{display:block}.sidebar{width:100%;padding:12px}
+.sidebar .logo{margin:0 8px 10px}.nav{flex-direction:row;overflow:auto}
+.nav button{white-space:nowrap;padding:9px 12px}
+.grid{grid-template-columns:repeat(2,1fr)}
+.content{padding:16px}.topbar{padding:12px 15px;flex-wrap:wrap}
 }
 @media(max-width:430px){.grid{gap:9px}.stat{padding:13px}.stat strong{font-size:22px}}
 </style>
 </head>
+
 <body>
 
 <section id="auth">
@@ -115,7 +117,8 @@ th{color:var(--muted);font-weight:600}
    <button onclick="navigate('units',this)">الوحدات</button>
    <button onclick="navigate('bookings',this)">الحجوزات</button>
    <button onclick="navigate('customers',this)">العملاء</button>
-   <button onclick="navigate('finance',this)">المالية</button>
+   <button onclick="navigate('finance',this)">المصروفات</button>
+   <button onclick="navigate('reports',this)">التقارير</button>
    <button onclick="navigate('settings',this)">الإعدادات</button>
   </div>
  </aside>
@@ -125,6 +128,7 @@ th{color:var(--muted);font-weight:600}
    <strong id="welcome">مرحباً بك في مدار</strong>
    <div class="actions">
     <select id="tenantSelect" onchange="switchTenant(this.value)"></select>
+    <button class="btn light" onclick="openTenantModal()">+ منشأة</button>
     <button class="btn light" onclick="logout()">خروج</button>
    </div>
   </header>
@@ -136,24 +140,28 @@ th{color:var(--muted);font-weight:600}
 <div id="toastRoot"></div>
 
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
- getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,
- sendEmailVerification,sendPasswordResetEmail,signOut,onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {
- getFirestore,doc,setDoc,getDoc,collection,addDoc,getDocs,
- deleteDoc,query,where,serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
 
-/* ضع إعدادات مشروع Firebase الخاص بمدار هنا */
+import {
+getAuth,createUserWithEmailAndPassword,
+signInWithEmailAndPassword,sendEmailVerification,
+sendPasswordResetEmail,signOut,onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+
+import {
+getFirestore,doc,setDoc,getDoc,collection,
+addDoc,getDocs,deleteDoc,serverTimestamp
+} from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+/* إعدادات مشروع MADAR */
 const firebaseConfig={
- apiKey:"YOUR_API_KEY",
- authDomain:"YOUR_PROJECT.firebaseapp.com",
- projectId:"YOUR_PROJECT_ID",
- storageBucket:"YOUR_PROJECT.appspot.com",
- messagingSenderId:"YOUR_SENDER_ID",
- appId:"YOUR_APP_ID"
+ apiKey:"AIzaSyDBpLTfcB3mdyw-7M9Or7IKn9AnGdjNoCU",
+ authDomain:"madar-d94c7.firebaseapp.com",
+ projectId:"madar-d94c7",
+ storageBucket:"madar-d94c7.firebasestorage.app",
+ messagingSenderId:"1084532917912",
+ appId:"1:1084532917912:web:c3054c50eaaf2fe1f232ed"
 };
 
 const firebaseApp=initializeApp(firebaseConfig);
@@ -164,54 +172,21 @@ let currentUser=null;
 let currentTenant=null;
 let tenants=[];
 let currentPage="home";
+let bookingUnits=[];
 
 const $=id=>document.getElementById(id);
 
 function toast(message){
- $("toastRoot").innerHTML=`<div class="toast">${escapeHTML(message)}</div>`;
- setTimeout(()=>$("toastRoot").innerHTML="",3000);
+ $("toastRoot").innerHTML=
+ `<div class="toast">${escapeHTML(message)}</div>`;
+ setTimeout(()=>$("toastRoot").innerHTML="",3500);
 }
+
 function escapeHTML(value){
  return String(value??"").replace(/[&<>"']/g,c=>({
  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
  }[c]));
 }
-window.showRegister=()=>{$("loginForm").classList.add("hidden");$("registerForm").classList.remove("hidden")};
-window.showLogin=()=>{$("registerForm").classList.add("hidden");$("loginForm").classList.remove("hidden")};
-
-window.register=async()=>{
- const name=$("regName").value.trim();
- const email=$("regEmail").value.trim();
- const password=$("regPassword").value;
- if(!name||!email||password.length<8)return toast("أكمل البيانات وتأكد من كلمة المرور");
- try{
-  const result=await createUserWithEmailAndPassword(auth,email,password);
-  await setDoc(doc(db,"users",result.user.uid),{
-   name,email,createdAt:serverTimestamp()
-  });
-  await sendEmailVerification(result.user);
-  toast("تم إنشاء الحساب. تحقق من بريدك الإلكتروني");
- }catch(e){toast(errorMessage(e))}
-};
-
-window.login=async()=>{
- try{
-  const email=$("loginEmail").value.trim();
-  const password=$("loginPassword").value;
-  const result=await signInWithEmailAndPassword(auth,email,password);
-  if(!result.user.emailVerified){
-   await signOut(auth);
-   return toast("يرجى توثيق بريدك الإلكتروني أولاً");
-  }
- }catch(e){toast(errorMessage(e))}
-};
-
-window.resetPassword=async()=>{
- const email=$("loginEmail").value.trim();
- if(!email)return toast("أدخل بريدك الإلكتروني أولاً");
- try{await sendPasswordResetEmail(auth,email);toast("أرسلنا رابط استعادة كلمة المرور")}
- catch(e){toast(errorMessage(e))}
-};
 
 function errorMessage(e){
  const errors={
@@ -219,38 +194,95 @@ function errorMessage(e){
  "auth/email-already-in-use":"البريد مستخدم مسبقاً",
  "auth/weak-password":"كلمة المرور ضعيفة",
  "auth/invalid-email":"البريد الإلكتروني غير صحيح",
- "auth/too-many-requests":"محاولات كثيرة، حاول لاحقاً"
+ "auth/too-many-requests":"محاولات كثيرة، حاول لاحقاً",
+ "permission-denied":"لا توجد صلاحية للوصول. راجع قواعد قاعدة البيانات."
  };
- return errors[e.code]||"حدث خطأ: "+e.message;
+ return errors[e.code]||("حدث خطأ: "+e.message);
 }
+
+window.showRegister=()=>{
+ $("loginForm").classList.add("hidden");
+ $("registerForm").classList.remove("hidden");
+};
+window.showLogin=()=>{
+ $("registerForm").classList.add("hidden");
+ $("loginForm").classList.remove("hidden");
+};
+
+window.register=async()=>{
+ const name=$("regName").value.trim();
+ const email=$("regEmail").value.trim();
+ const password=$("regPassword").value;
+
+ if(!name||!email||password.length<8)
+ return toast("أكمل البيانات واجعل كلمة المرور 8 أحرف على الأقل");
+
+ try{
+  const result=await createUserWithEmailAndPassword(auth,email,password);
+  await setDoc(doc(db,"users",result.user.uid),{
+   name,email,createdAt:serverTimestamp()
+  });
+  await sendEmailVerification(result.user);
+  await signOut(auth);
+  showLogin();
+  toast("تم إنشاء الحساب. تحقق من بريدك الإلكتروني ثم سجل الدخول");
+ }catch(e){toast(errorMessage(e))}
+};
+
+window.login=async()=>{
+ try{
+  const result=await signInWithEmailAndPassword(
+   auth,$("loginEmail").value.trim(),$("loginPassword").value
+  );
+  if(!result.user.emailVerified){
+   await sendEmailVerification(result.user);
+   await signOut(auth);
+   return toast("تحقق من بريدك الإلكتروني. أرسلنا رسالة التفعيل");
+  }
+ }catch(e){toast(errorMessage(e))}
+};
+
+window.resetPassword=async()=>{
+ const email=$("loginEmail").value.trim();
+ if(!email)return toast("أدخل بريدك الإلكتروني أولاً");
+ try{
+  await sendPasswordResetEmail(auth,email);
+  toast("تم إرسال رابط استعادة كلمة المرور");
+ }catch(e){toast(errorMessage(e))}
+};
+
+window.logout=()=>signOut(auth);
 
 onAuthStateChanged(auth,async user=>{
  currentUser=user;
  if(user&&user.emailVerified){
   $("auth").classList.add("hidden");
   $("app").classList.remove("hidden");
-  const profile=await getDoc(doc(db,"users",user.uid));
-  $("welcome").textContent="مرحباً "+(profile.exists()?profile.data().name:"بك");
-  await loadTenants();
+  try{
+   const profile=await getDoc(doc(db,"users",user.uid));
+   $("welcome").textContent="مرحباً "+(profile.exists()?profile.data().name:"بك");
+   await loadTenants();
+  }catch(e){toast(errorMessage(e))}
  }else{
   $("app").classList.add("hidden");
   $("auth").classList.remove("hidden");
  }
 });
 
-window.logout=()=>signOut(auth);
-
 async function loadTenants(){
  const snap=await getDocs(collection(db,"users",currentUser.uid,"tenants"));
  tenants=snap.docs.map(d=>({id:d.id,...d.data()}));
+
  $("tenantSelect").innerHTML=tenants.map(t=>
   `<option value="${escapeHTML(t.id)}">${escapeHTML(t.name)}</option>`
  ).join("");
+
  if(tenants.length){
   currentTenant=tenants[0].id;
   $("tenantSelect").value=currentTenant;
   render();
  }else{
+  currentTenant=null;
   showCreateTenant();
  }
 }
@@ -266,27 +298,40 @@ function showCreateTenant(){
 
 window.openTenantModal=()=>{
  openModal("إنشاء منشأة",`
-  <label>اسم المنشأة</label><input id="tName" placeholder="مثال: شاليهات النخيل">
+  <label>اسم المنشأة</label>
+  <input id="tName" placeholder="مثال: شاليهات النخيل">
   <label>نوع النشاط</label>
   <select id="tType">
-   <option>شاليهات</option><option>استراحات</option>
-   <option>شقق مفروشة</option><option>فنادق</option>
-   <option>مخيمات</option><option>فلل</option><option>أخرى</option>
+   <option>شاليهات</option>
+   <option>استراحات</option>
+   <option>شقق مفروشة</option>
+   <option>فنادق</option>
+   <option>مخيمات</option>
+   <option>فلل</option>
+   <option>أخرى</option>
   </select>
-  <label>المدينة</label><input id="tCity" placeholder="المدينة">
-  <label>رقم التواصل</label><input id="tPhone" placeholder="05xxxxxxxx">
+  <label>المدينة</label>
+  <input id="tCity" placeholder="المدينة">
+  <label>رقم التواصل</label>
+  <input id="tPhone" placeholder="05xxxxxxxx">
  `,async()=>{
   const name=$("tName").value.trim();
   if(!name)return toast("اكتب اسم المنشأة");
+
   try{
    const ref=await addDoc(collection(db,"tenants"),{
-    name,type:$("tType").value,city:$("tCity").value.trim(),
-    phone:$("tPhone").value.trim(),ownerId:currentUser.uid,
+    name,
+    type:$("tType").value,
+    city:$("tCity").value.trim(),
+    phone:$("tPhone").value.trim(),
+    ownerId:currentUser.uid,
     createdAt:serverTimestamp()
    });
+
    await setDoc(doc(db,"users",currentUser.uid,"tenants",ref.id),{
     name,role:"owner",createdAt:serverTimestamp()
    });
+
    closeModal();
    await loadTenants();
    toast("تم إنشاء المنشأة");
@@ -304,15 +349,16 @@ async function getItems(type){
  const snap=await getDocs(collection(db,"tenants",currentTenant,type));
  return snap.docs.map(d=>({id:d.id,...d.data()}));
 }
+
 async function addItem(type,data){
  if(!currentTenant)throw new Error("اختر منشأة أولاً");
  return addDoc(collection(db,"tenants",currentTenant,type),{
   ...data,createdAt:serverTimestamp(),createdBy:currentUser.uid
  });
 }
+
 async function removeItem(type,id){
  await deleteDoc(doc(db,"tenants",currentTenant,type,id));
- render();
 }
 
 window.navigate=(page,button)=>{
@@ -324,27 +370,45 @@ window.navigate=(page,button)=>{
 
 async function render(){
  if(!currentTenant)return showCreateTenant();
+
  const names={
- home:"الرئيسية",units:"إدارة الوحدات",bookings:"الحجوزات",
- customers:"العملاء",finance:"الإدارة المالية",settings:"الإعدادات"
+ home:"الرئيسية",units:"إدارة الوحدات",
+ bookings:"الحجوزات",customers:"العملاء",
+ finance:"المصروفات",reports:"التقارير",settings:"الإعدادات"
  };
- $("page").innerHTML=`<h1 class="page-title">${names[currentPage]}</h1><p class="muted">إدارة منشأتك من مكان واحد</p><div class="empty">جاري تحميل البيانات...</div>`;
+
+ $("page").innerHTML=
+ `<h1 class="page-title">${names[currentPage]}</h1>
+ <p class="muted">إدارة منشأتك من مكان واحد</p>
+ <div class="empty">جاري تحميل البيانات...</div>`;
+
  try{
   if(currentPage==="home")await renderHome();
   if(currentPage==="units")await renderUnits();
   if(currentPage==="bookings")await renderBookings();
   if(currentPage==="customers")await renderCustomers();
   if(currentPage==="finance")await renderFinance();
+  if(currentPage==="reports")await renderReports();
   if(currentPage==="settings")await renderSettings();
- }catch(e){$("page").innerHTML+=`<p class="muted">تعذر تحميل البيانات: ${escapeHTML(e.message)}</p>`}
+ }catch(e){
+  $("page").innerHTML+=
+  `<p class="muted">${escapeHTML(errorMessage(e))}</p>`;
+ }
+}
+
+function stat(label,value){
+ return `<div class="stat"><span>${label}</span><strong>${value}</strong></div>`;
 }
 
 async function renderHome(){
  const [units,bookings,customers,expenses]=await Promise.all([
-  getItems("units"),getItems("bookings"),getItems("customers"),getItems("expenses")
+  getItems("units"),getItems("bookings"),
+  getItems("customers"),getItems("expenses")
  ]);
+
  const income=bookings.reduce((s,b)=>s+Number(b.paid||0),0);
  const cost=expenses.reduce((s,e)=>s+Number(e.amount||0),0);
+
  $("page").innerHTML=`
  <h1 class="page-title">لوحة التحكم</h1>
  <p class="muted">ملخص أداء المنشأة</p>
@@ -354,16 +418,18 @@ async function renderHome(){
   ${stat("العملاء",customers.length)}
   ${stat("صافي المقبوضات",(income-cost).toLocaleString("ar-SA")+" ر.س")}
  </div>
- <div class="panel"><div class="panel-head"><h3>مرحباً بك في مدار</h3></div>
- <p class="muted">يمكنك الآن إدارة وحداتك وحجوزاتك وعملائك من القائمة الرئيسية.</p></div>`;
+ <div class="panel">
+  <h3>مرحباً بك في مدار</h3>
+  <p class="muted">يمكنك إدارة وحداتك وحجوزاتك وعملائك من القائمة الرئيسية.</p>
+ </div>`;
 }
-function stat(label,value){return `<div class="stat"><span>${label}</span><strong>${value}</strong></div>`}
 
 window.openModal=(title,body,onSave)=>{
  $("modalRoot").innerHTML=`
- <div class="modal-bg" id="modalBg">
+ <div class="modal-bg">
   <div class="modal">
-   <h3>${title}</h3>${body}
+   <h3>${title}</h3>
+   ${body}
    <div class="modal-actions">
     <button class="btn" id="modalSave">حفظ</button>
     <button class="btn light" onclick="closeModal()">إلغاء</button>
@@ -372,74 +438,126 @@ window.openModal=(title,body,onSave)=>{
  </div>`;
  $("modalSave").onclick=onSave;
 };
+
 window.closeModal=()=>$("modalRoot").innerHTML="";
+
+function table(headers,rows){
+ if(!rows.length)return `<div class="empty">لا توجد بيانات حتى الآن</div>`;
+ return `<div class="table-wrap"><table>
+ <thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead>
+ <tbody>${rows.map(row=>`<tr>${row.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody>
+ </table></div>`;
+}
 
 async function renderUnits(){
  const items=await getItems("units");
  $("page").innerHTML=`
  <div class="panel">
-  <div class="panel-head"><h3>الوحدات</h3><button class="btn gold" onclick="newUnit()">+ إضافة وحدة</button></div>
-  ${table(["اسم الوحدة","التصنيف","السعر اليومي","الإجراءات"],items.map(x=>[
-   x.name,x.type,(x.price||0)+" ر.س",
-   `<button class="btn danger" onclick="removeRecord('units','${x.id}')">حذف</button>`
-  ]))}
+  <div class="panel-head">
+   <h3>الوحدات</h3>
+   <button class="btn gold" onclick="newUnit()">+ إضافة وحدة</button>
+  </div>
+  ${table(["اسم الوحدة","التصنيف","السعر اليومي","الإجراءات"],
+   items.map(x=>[
+    escapeHTML(x.name),escapeHTML(x.type),
+    (x.price||0)+" ر.س",
+    `<button class="btn danger" onclick="removeRecord('units','${x.id}')">حذف</button>`
+   ]))}
  </div>`;
 }
+
 window.newUnit=()=>openModal("إضافة وحدة",`
- <label>اسم الوحدة</label><input id="uName" placeholder="الوحدة الأولى">
+ <label>اسم الوحدة</label>
+ <input id="uName" placeholder="الوحدة الأولى">
  <label>التصنيف</label>
- <select id="uType"><option>شاليه</option><option>شقة</option><option>غرفة</option><option>مخيم</option><option>فيلا</option><option>أخرى</option></select>
- <label>السعر اليومي</label><input id="uPrice" type="number" min="0" placeholder="0">
- <label>الوصف</label><input id="uDesc" placeholder="اختياري">
+ <select id="uType">
+  <option>شاليه</option><option>شقة</option><option>غرفة</option>
+  <option>مخيم</option><option>فيلا</option><option>أخرى</option>
+ </select>
+ <label>السعر اليومي</label>
+ <input id="uPrice" type="number" min="0" placeholder="0">
+ <label>الوصف</label>
+ <input id="uDesc" placeholder="اختياري">
 `,async()=>{
  const name=$("uName").value.trim();
  if(!name)return toast("أدخل اسم الوحدة");
- await addItem("units",{name,type:$("uType").value,price:Number($("uPrice").value||0),description:$("uDesc").value});
+ await addItem("units",{
+  name,type:$("uType").value,
+  price:Number($("uPrice").value||0),
+  description:$("uDesc").value
+ });
  closeModal();render();toast("تمت إضافة الوحدة");
 });
 
 async function renderBookings(){
- const [items,units]=await Promise.all([getItems("bookings"),getItems("units")]);
+ const [items,units]=await Promise.all([
+  getItems("bookings"),getItems("units")
+ ]);
+ bookingUnits=units;
+
  $("page").innerHTML=`
  <div class="panel">
-  <div class="panel-head"><h3>الحجوزات</h3><button class="btn gold" onclick="newBooking()">+ حجز جديد</button></div>
-  ${table(["العميل","الوحدة","الدخول","الخروج","الإجمالي","المدفوع","الحالة","الإجراءات"],items.map(x=>[
-   x.customer,x.unitName,x.start,x.end,(x.total||0)+" ر.س",
-   (x.paid||0)+" ر.س",x.status,
-   `<button class="btn danger" onclick="removeRecord('bookings','${x.id}')">حذف</button>`
-  ]))}
+  <div class="panel-head">
+   <h3>الحجوزات</h3>
+   <button class="btn gold" onclick="newBooking()">+ حجز جديد</button>
+  </div>
+  ${table(["العميل","الوحدة","الدخول","الخروج","الإجمالي","المدفوع","الحالة","الإجراءات"],
+   items.map(x=>[
+    escapeHTML(x.customer),escapeHTML(x.unitName),
+    x.start,x.end,(x.total||0)+" ر.س",
+    (x.paid||0)+" ر.س",escapeHTML(x.status),
+    `<button class="btn danger" onclick="removeRecord('bookings','${x.id}')">حذف</button>`
+   ]))}
  </div>`;
- window.bookingUnits=units;
 }
+
 window.newBooking=()=>{
- const units=window.bookingUnits||[];
+ const units=bookingUnits;
  if(!units.length)return toast("أضف وحدة قبل إنشاء الحجز");
+
  openModal("حجز جديد",`
   <label>اسم العميل</label><input id="bCustomer">
   <label>رقم الجوال</label><input id="bPhone">
-  <label>الوحدة</label><select id="bUnit">${units.map(u=>`<option value="${u.id}">${escapeHTML(u.name)}</option>`).join("")}</select>
+  <label>الوحدة</label>
+  <select id="bUnit">
+   ${units.map(u=>`<option value="${u.id}">${escapeHTML(u.name)}</option>`).join("")}
+  </select>
   <label>تاريخ الدخول</label><input id="bStart" type="date">
   <label>تاريخ الخروج</label><input id="bEnd" type="date">
   <label>إجمالي الحجز</label><input id="bTotal" type="number" min="0">
   <label>المبلغ المدفوع</label><input id="bPaid" type="number" min="0">
-  <label>الحالة</label><select id="bStatus"><option>مؤكد</option><option>بانتظار العربون</option><option>مكتمل</option><option>ملغي</option></select>
+  <label>الحالة</label>
+  <select id="bStatus">
+   <option>مؤكد</option><option>بانتظار العربون</option>
+   <option>مكتمل</option><option>ملغي</option>
+  </select>
  `,async()=>{
   const customer=$("bCustomer").value.trim();
   const unit=units.find(u=>u.id===$("bUnit").value);
-  const start=$("bStart").value,end=$("bEnd").value;
-  const total=Number($("bTotal").value||0),paid=Number($("bPaid").value||0);
-  if(!customer||!start||!end||!unit)return toast("أكمل بيانات الحجز");
+  const start=$("bStart").value;
+  const end=$("bEnd").value;
+  const total=Number($("bTotal").value||0);
+  const paid=Number($("bPaid").value||0);
+
+  if(!customer||!start||!end||!unit)
+   return toast("أكمل بيانات الحجز");
   if(end<=start)return toast("تاريخ الخروج يجب أن يكون بعد الدخول");
   if(paid>total)return toast("المدفوع أكبر من الإجمالي");
+
   const all=await getItems("bookings");
-  const conflict=all.some(b=>b.unitId===unit.id&&b.status!=="ملغي"&&
-   start<b.end&&end>b.start);
+  const conflict=all.some(b=>
+   b.unitId===unit.id&&b.status!=="ملغي"&&
+   start<b.end&&end>b.start
+  );
   if(conflict)return toast("الوحدة محجوزة في هذه الفترة");
+
   await addItem("bookings",{
-   customer,phone:$("bPhone").value.trim(),unitId:unit.id,
-   unitName:unit.name,start,end,total,paid,
-   remaining:total-paid,status:$("bStatus").value
+   customer,phone:$("bPhone").value.trim(),
+   unitId:unit.id,unitName:unit.name,
+   start,end,total,paid,remaining:total-paid,
+   status:$("bStatus").value
   });
+
   closeModal();render();toast("تم حفظ الحجز");
  });
 };
@@ -448,13 +566,19 @@ async function renderCustomers(){
  const items=await getItems("customers");
  $("page").innerHTML=`
  <div class="panel">
-  <div class="panel-head"><h3>العملاء</h3><button class="btn gold" onclick="newCustomer()">+ إضافة عميل</button></div>
-  ${table(["الاسم","الجوال","البريد","الإجراءات"],items.map(x=>[
-   x.name,x.phone||"-",x.email||"-",
-   `<button class="btn danger" onclick="removeRecord('customers','${x.id}')">حذف</button>`
-  ]))}
+  <div class="panel-head">
+   <h3>العملاء</h3>
+   <button class="btn gold" onclick="newCustomer()">+ إضافة عميل</button>
+  </div>
+  ${table(["الاسم","الجوال","البريد","الإجراءات"],
+   items.map(x=>[
+    escapeHTML(x.name),escapeHTML(x.phone||"-"),
+    escapeHTML(x.email||"-"),
+    `<button class="btn danger" onclick="removeRecord('customers','${x.id}')">حذف</button>`
+   ]))}
  </div>`;
 }
+
 window.newCustomer=()=>openModal("إضافة عميل",`
  <label>اسم العميل</label><input id="cName">
  <label>رقم الجوال</label><input id="cPhone">
@@ -462,7 +586,10 @@ window.newCustomer=()=>openModal("إضافة عميل",`
 `,async()=>{
  const name=$("cName").value.trim();
  if(!name)return toast("أدخل اسم العميل");
- await addItem("customers",{name,phone:$("cPhone").value.trim(),email:$("cEmail").value.trim()});
+ await addItem("customers",{
+  name,phone:$("cPhone").value.trim(),
+  email:$("cEmail").value.trim()
+ });
  closeModal();render();toast("تمت إضافة العميل");
 });
 
@@ -470,42 +597,81 @@ async function renderFinance(){
  const items=await getItems("expenses");
  $("page").innerHTML=`
  <div class="panel">
-  <div class="panel-head"><h3>المصروفات</h3><button class="btn gold" onclick="newExpense()">+ إضافة مصروف</button></div>
-  ${table(["البيان","التصنيف","التاريخ","المبلغ","الإجراءات"],items.map(x=>[
-   x.title,x.category,x.date,(x.amount||0)+" ر.س",
-   `<button class="btn danger" onclick="removeRecord('expenses','${x.id}')">حذف</button>`
-  ]))}
+  <div class="panel-head">
+   <h3>المصروفات</h3>
+   <button class="btn gold" onclick="newExpense()">+ إضافة مصروف</button>
+  </div>
+  ${table(["البيان","التصنيف","التاريخ","المبلغ","الإجراءات"],
+   items.map(x=>[
+    escapeHTML(x.title),escapeHTML(x.category),
+    x.date,(x.amount||0)+" ر.س",
+    `<button class="btn danger" onclick="removeRecord('expenses','${x.id}')">حذف</button>`
+   ]))}
  </div>`;
 }
+
 window.newExpense=()=>openModal("إضافة مصروف",`
  <label>البيان</label><input id="eTitle">
- <label>التصنيف</label><select id="eCategory"><option>تشغيل</option><option>صيانة</option><option>رواتب</option><option>مشتريات</option><option>أخرى</option></select>
- <label>التاريخ</label><input id="eDate" type="date" value="${new Date().toISOString().slice(0,10)}">
+ <label>التصنيف</label>
+ <select id="eCategory">
+  <option>تشغيل</option><option>صيانة</option>
+  <option>رواتب</option><option>مشتريات</option><option>أخرى</option>
+ </select>
+ <label>التاريخ</label>
+ <input id="eDate" type="date" value="${new Date().toISOString().slice(0,10)}">
  <label>المبلغ</label><input id="eAmount" type="number" min="0">
 `,async()=>{
- const title=$("eTitle").value.trim(),amount=Number($("eAmount").value);
+ const title=$("eTitle").value.trim();
+ const amount=Number($("eAmount").value);
  if(!title||amount<=0)return toast("أكمل بيانات المصروف");
- await addItem("expenses",{title,category:$("eCategory").value,date:$("eDate").value,amount});
+ await addItem("expenses",{
+  title,category:$("eCategory").value,
+  date:$("eDate").value,amount
+ });
  closeModal();render();toast("تم تسجيل المصروف");
 });
+
+async function renderReports(){
+ const [bookings,expenses,units]=await Promise.all([
+  getItems("bookings"),getItems("expenses"),getItems("units")
+ ]);
+ const income=bookings.reduce((s,b)=>s+Number(b.paid||0),0);
+ const total=bookings.reduce((s,b)=>s+Number(b.total||0),0);
+ const costs=expenses.reduce((s,e)=>s+Number(e.amount||0),0);
+
+ $("page").innerHTML=`
+ <h1 class="page-title">التقارير</h1>
+ <div class="grid">
+  ${stat("عدد الوحدات",units.length)}
+  ${stat("عدد الحجوزات",bookings.length)}
+  ${stat("قيمة الحجوزات",total.toLocaleString("ar-SA")+" ر.س")}
+  ${stat("المبالغ المقبوضة",income.toLocaleString("ar-SA")+" ر.س")}
+ </div>
+ <div class="panel">
+  <h3>ملخص مالي</h3>
+  <p>المقبوضات: <strong>${income.toLocaleString("ar-SA")} ر.س</strong></p>
+  <p>المصروفات: <strong>${costs.toLocaleString("ar-SA")} ر.س</strong></p>
+  <p>الصافي: <strong>${(income-costs).toLocaleString("ar-SA")} ر.س</strong></p>
+ </div>`;
+}
 
 async function renderSettings(){
  $("page").innerHTML=`
  <div class="panel">
   <h3>إعدادات الحساب</h3>
   <p>البريد الإلكتروني: ${escapeHTML(currentUser.email)}</p>
-  <p class="muted">يمكنك إدارة المنشآت من القائمة العلوية.</p>
+  <p class="muted">إدارة المنشآت من القائمة العلوية.</p>
   <button class="btn gold" onclick="openTenantModal()">+ إضافة منشأة أخرى</button>
  </div>`;
 }
-function table(headers,rows){
- if(!rows.length)return `<div class="empty">لا توجد بيانات حتى الآن</div>`;
- return `<div class="table-wrap"><table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
-}
+
 window.removeRecord=async(type,id)=>{
  if(!confirm("هل أنت متأكد من الحذف؟"))return;
- try{await removeItem(type,id);toast("تم الحذف")}
- catch(e){toast(errorMessage(e))}
+ try{
+  await removeItem(type,id);
+  toast("تم الحذف");
+  render();
+ }catch(e){toast(errorMessage(e))}
 };
 </script>
 </body>
