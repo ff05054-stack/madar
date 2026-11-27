@@ -1,6 +1,3 @@
-
-
-
 ‏<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -1095,22 +1092,30 @@ function removeSavedAccount(key){
 
 async function initApp(){
   buildTimeSelectOptions();
-  try{
-    const old = await storageGet('rawana_state3');
-    if(old){ data = deepMerge(data, JSON.parse(old.value)); }
-  }catch(e){}
-  if(data.coffeeCategories.length===0){
-    data.coffeeCategories = [
-      {id:uid(), name:'20 كوب', price:150, description:''},
-      {id:uid(), name:'40 كوب', price:260, description:''}
-    ];
+  const accounts = getSavedAccounts().sort((a,b)=>(b.lastUsed||0)-(a.lastUsed||0));
+  const mostRecent = accounts[0];
+  if(mostRecent){
+    try{
+      const rec = await sharedGet(mostRecent.key);
+      if(rec){
+        const parsed = JSON.parse(rec.value);
+        if(parsed.pin===mostRecent.pin){
+          data = deepMerge(data, parsed.data||{});
+          currentAccountKey = mostRecent.key;
+          currentAccountPin = mostRecent.pin;
+          document.getElementById('loginGate').style.display='none';
+          renderEverything();
+          return;
+        }
+      }
+    }catch(e){}
   }
-  currentAccountKey = null;
-  document.getElementById('loginGate').style.display='none';
-  renderEverything();
+  document.getElementById('loginGate').style.display='flex';
+  if(mostRecent && mostRecent.phoneDisplay) document.getElementById('loginPhone').value = mostRecent.phoneDisplay;
+  renderLoginGateAccounts();
 }
 
-‏function renderLoginGateAccounts(){
+function renderLoginGateAccounts(){
   const wrap = document.getElementById('loginSavedAccounts');
   if(!wrap) return;
   const accounts = getSavedAccounts().sort((a,b)=>(b.lastUsed||0)-(a.lastUsed||0));
@@ -2797,5 +2802,3 @@ function closeModal(id){ document.getElementById(id).classList.remove('show'); }
 
 initApp();
 </script>
-</body>
-</html>
