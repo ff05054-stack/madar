@@ -481,6 +481,7 @@ textarea{resize:vertical;min-height:60px;}
           <div class="checkbox-row"><span>مربع الحجوزات القادمة (عدد)</span><label class="switch"><input type="checkbox" id="hsStatUpcoming"><span class="slider"></span></label></div>
           <div class="checkbox-row"><span>مربع إجمالي الإيرادات</span><label class="switch"><input type="checkbox" id="hsStatRevenue"><span class="slider"></span></label></div>
           <div class="checkbox-row"><span>مربع صافي الربح</span><label class="switch"><input type="checkbox" id="hsStatNet"><span class="slider"></span></label></div>
+          <div class="checkbox-row"><span>مربع صافي الربح بعد خصم غير الواصل</span><label class="switch"><input type="checkbox" id="hsStatNetReceived"><span class="slider"></span></label></div>
           <div class="checkbox-row"><span>مربع المبالغ اللي ماوصلت بعد</span><label class="switch"><input type="checkbox" id="hsStatRemaining"><span class="slider"></span></label></div>
           <div class="checkbox-row"><span>قائمة الحجوزات القادمة</span><label class="switch"><input type="checkbox" id="hsUpcomingList"><span class="slider"></span></label></div>
           <div class="checkbox-row"><span>قائمة طلبات ركن القهوة القادمة</span><label class="switch"><input type="checkbox" id="hsUpcomingCoffee"><span class="slider"></span></label></div>
@@ -946,6 +947,23 @@ textarea{resize:vertical;min-height:60px;}
   </div>
 </div>
 
+<!-- PAYMENT MODAL -->
+<div class="modal-backdrop" id="paymentModal">
+  <div class="modal">
+    <div class="modal-head"><h3>💵 تسجيل دفعة</h3><button class="close-x" onclick="closeModal('paymentModal')">✕</button></div>
+    <input type="hidden" id="payBookingId">
+    <div id="paySummary"></div>
+    <label>مبلغ الدفعة</label>
+    <input type="number" id="payAmount" inputmode="decimal">
+    <div class="error-text" id="payError"></div>
+    <div class="btn-row">
+      <button class="btn-full" onclick="savePayment()">تسجيل الدفعة</button>
+      <button class="btn-outline" onclick="payFullRemaining()">سداد كامل المتبقي</button>
+    </div>
+    <div id="payHistory"></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -972,7 +990,7 @@ let data = {
     calendarColors:{available:'#E9F5EE', booked:'#B23B2E', thuFri:'#FCF1D2'},
     currencySymbol:'ر.س', invoicePrefix:'INV', taxNumber:'',
     themeColors:{primary:'#0B7285', gold:'#E3A857', cream:'#FBF3E1'},
-    homeSections:{statUpcoming:true, statRevenue:true, statNet:true, statRemaining:true, upcomingList:true, upcomingCoffee:true, quickActions:true},
+    homeSections:{statUpcoming:true, statRevenue:true, statNet:true, statNetReceived:true, statRemaining:true, upcomingList:true, upcomingCoffee:true, quickActions:true},
     templates: DEFAULT_TEMPLATES
   }
 };
@@ -1451,6 +1469,7 @@ function renderHome(){
   if(hs.statUpcoming) statsBoxes += `<div class="qs-box"><div class="ic">📌</div><div class="val">${upcoming.length}</div><div class="lbl">الحجوزات القادمة</div></div>`;
   if(hs.statRevenue) statsBoxes += `<div class="qs-box"><div class="ic">💰</div><div class="val">${fmtMoney(totalChaletRevenue)}</div><div class="lbl">إجمالي الإيرادات</div></div>`;
   if(hs.statNet) statsBoxes += `<div class="qs-box"><div class="ic">📈</div><div class="val">${fmtMoney(netProfit)}</div><div class="lbl">صافي الربح</div></div>`;
+  if(hs.statNetReceived) statsBoxes += `<div class="qs-box"><div class="ic">✅</div><div class="val">${fmtMoney(totalChaletRevenue - remaining - expTotal)}</div><div class="lbl">صافي الربح بعد خصم غير الواصل</div></div>`;
   if(hs.statRemaining) statsBoxes += `<div class="qs-box"><div class="ic">⏳</div><div class="val">${fmtMoney(remaining)}</div><div class="lbl">مبالغ لم تصل بعد</div></div>`;
   if(statsBoxes) html += `<div class="quick-stats-grid">${statsBoxes}</div>`;
 
@@ -1518,6 +1537,7 @@ function bookingItemHtml(b){
       <div class="bk-cell"><div class="lbl">المتبقي</div><div class="val">${fmtMoney(bookingRemaining(b))}</div></div>
     </div>
     <div class="actions">
+      ${bookingRemaining(b)>0 && b.status!=='cancelled' ? `<button class="mini-btn primary" onclick="openPaymentModal('${b.id}')">💵 دفعة</button>` : ''}
       <button class="mini-btn" onclick="openBookingForm('${b.id}')">✏️ تعديل</button>
       <button class="mini-btn primary" onclick="openInvoiceForBooking('${b.id}')">الفاتورة</button>
       <button class="mini-btn" onclick="openContractForBooking('${b.id}')">العقد</button>
@@ -2084,6 +2104,7 @@ function openBookingDetail(id){
       ${b.notes?`<div class="dates" style="margin-top:8px;">📝 ${escapeHtml(b.notes)}</div>`:''}
     </div>
     <div class="actions">
+      ${bookingRemaining(b)>0 && b.status!=='cancelled' ? `<button class="mini-btn primary" onclick="closeModal('detailModal');openPaymentModal('${b.id}')">💵 دفعة</button>` : ''}
       <button class="mini-btn" onclick="closeModal('detailModal');openBookingForm('${b.id}')">✏️ تعديل</button>
       <button class="mini-btn primary" onclick="closeModal('detailModal');openInvoiceForBooking('${b.id}')">الفاتورة</button>
       <button class="mini-btn" onclick="closeModal('detailModal');openContractForBooking('${b.id}')">العقد</button>
@@ -2539,6 +2560,7 @@ function fillSettingsForm(){
   document.getElementById('hsStatUpcoming').checked = !!s.homeSections.statUpcoming;
   document.getElementById('hsStatRevenue').checked = !!s.homeSections.statRevenue;
   document.getElementById('hsStatNet').checked = !!s.homeSections.statNet;
+  document.getElementById('hsStatNetReceived').checked = !!s.homeSections.statNetReceived;
   document.getElementById('hsStatRemaining').checked = !!s.homeSections.statRemaining;
   document.getElementById('hsUpcomingList').checked = !!s.homeSections.upcomingList;
   document.getElementById('hsUpcomingCoffee').checked = !!s.homeSections.upcomingCoffee;
@@ -2610,6 +2632,7 @@ async function saveHomeSettings(){
     statUpcoming: document.getElementById('hsStatUpcoming').checked,
     statRevenue: document.getElementById('hsStatRevenue').checked,
     statNet: document.getElementById('hsStatNet').checked,
+    statNetReceived: document.getElementById('hsStatNetReceived').checked,
     statRemaining: document.getElementById('hsStatRemaining').checked,
     upcomingList: document.getElementById('hsUpcomingList').checked,
     upcomingCoffee: document.getElementById('hsUpcomingCoffee').checked,
@@ -2796,6 +2819,53 @@ function openNotifications(){
   const n = computeNotifications();
   document.getElementById('notifList').innerHTML = n.length===0 ? `<div class="empty">لا توجد إشعارات حاليًا</div>` : n.map(x=>`<div class="notif-item"><span class="ic">${x.ic}</span><div>${x.t}</div></div>`).join('');
   document.getElementById('notifModal').classList.add('show');
+}
+
+// ---------------- PAYMENTS ----------------
+function renderPaymentInfo(b){
+  document.getElementById('paySummary').innerHTML = `
+    <div class="card" style="margin-top:6px;">
+      <div class="report-row"><span>العميل</span><b>${escapeHtml(b.customerName)}</b></div>
+      <div class="report-row"><span>إجمالي الحجز</span><b>${fmtMoney(bookingTotal(b))}</b></div>
+      <div class="report-row"><span>المدفوع</span><b>${fmtMoney(b.paid)}</b></div>
+      <div class="report-row"><span>المتبقي</span><b>${fmtMoney(bookingRemaining(b))}</b></div>
+    </div>`;
+  const pays = (b.payments||[]).slice().reverse();
+  document.getElementById('payHistory').innerHTML = pays.length===0 ? '' :
+    `<div class="section-title" style="font-size:12.5px;">سجل الدفعات</div>` +
+    pays.map(p=>`<div class="report-row"><span>${fmtDateAr(p.date)}</span><b>${fmtMoney(p.amount)}</b></div>`).join('');
+}
+function openPaymentModal(id){
+  const b = data.bookings.find(x=>x.id===id); if(!b) return;
+  document.getElementById('payBookingId').value = id;
+  document.getElementById('payError').classList.remove('show');
+  const rem = Math.max(0, bookingRemaining(b));
+  document.getElementById('payAmount').value = rem>0 ? rem : '';
+  renderPaymentInfo(b);
+  document.getElementById('paymentModal').classList.add('show');
+}
+function payFullRemaining(){
+  const b = data.bookings.find(x=>x.id===document.getElementById('payBookingId').value); if(!b) return;
+  document.getElementById('payAmount').value = Math.max(0, bookingRemaining(b));
+  savePayment();
+}
+async function savePayment(){
+  const errEl = document.getElementById('payError');
+  errEl.classList.remove('show');
+  const b = data.bookings.find(x=>x.id===document.getElementById('payBookingId').value); if(!b) return;
+  const amount = Number(document.getElementById('payAmount').value||0);
+  const rem = bookingRemaining(b);
+  if(!amount || amount<=0){ errEl.textContent='أدخل مبلغ صحيح'; errEl.classList.add('show'); return; }
+  if(amount>rem){ errEl.textContent=`المبلغ أكبر من المتبقي (${fmtMoney(rem)})`; errEl.classList.add('show'); return; }
+  b.paid = Number(b.paid||0) + amount;
+  b.payments = b.payments || [];
+  b.payments.push({id:uid(), amount, date:todayStr()});
+  if(b.status==='awaitingDeposit') b.status = 'confirmed';
+  logActivity(`تم تسجيل دفعة ${fmtMoney(amount)} من ${b.customerName}`);
+  await saveData();
+  closeModal('paymentModal');
+  renderEverything();
+  showToast(bookingRemaining(b)<=0 ? 'تم سداد كامل المبلغ ✅' : 'تم تسجيل الدفعة');
 }
 
 function closeModal(id){ document.getElementById(id).classList.remove('show'); }
