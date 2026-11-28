@@ -1718,7 +1718,8 @@ function renderCoffee(){
         <div class="qs-box"><div class="ic">🧾</div><div class="val">${ordersCount}</div><div class="lbl">عدد الطلبات</div></div>
         <div class="qs-box"><div class="ic">💸</div><div class="val">${fmtMoney(coffeeExpTotal)}</div><div class="lbl">مصروفات ركن القهوة</div></div>
         <div class="qs-box"><div class="ic">⏳</div><div class="val">${fmtMoney(coffeeRemainingTotal)}</div><div class="lbl">مبالغ لم تصل بعد</div></div>
-        <div class="qs-box" style="grid-column:span 2;"><div class="ic">📈</div><div class="val">${fmtMoney(coffeeRevenue-coffeeExpTotal)}</div><div class="lbl">صافي ربح ركن القهوة</div></div>
+        <div class="qs-box"><div class="ic">📈</div><div class="val">${fmtMoney(coffeeRevenue-coffeeExpTotal)}</div><div class="lbl">صافي ربح ركن القهوة</div></div>
+        <div class="qs-box"><div class="ic">✅</div><div class="val">${fmtMoney(coffeeRevenue-coffeeRemainingTotal-coffeeExpTotal)}</div><div class="lbl">صافي ربح القهوة بعد خصم غير الواصل</div></div>
       </div>
       ${rows ? `<div class="card" style="margin-top:12px;"><h3>تفصيل حسب الفئة</h3>${rows}</div>` : ''}`;
   }
@@ -1919,19 +1920,6 @@ async function saveCoffeeOrder(){
   const notes = document.getElementById('coffeeOrderNotes').value.trim();
   const id = document.getElementById('coffeeOrderId').value;
 
-  const conflictOrder = data.coffeeOrders.find(o=>o.id!==id && o.date===date);
-  if(conflictOrder){
-    errEl.textContent = `يوجد طلب قهوة آخر بنفس اليوم لعميل ${conflictOrder.customerName||''} — ركن القهوة ما يقدر يخدم طلبين بنفس اليوم`;
-    errEl.classList.add('show');
-    return;
-  }
-  const conflictBooking = data.bookings.find(b=>b.status!=='cancelled' && (b.coffee||[]).length>0 && b.checkInDate===date);
-  if(conflictBooking){
-    errEl.textContent = `يوجد حجز شاليه لعميل ${conflictBooking.customerName} بنفس اليوم يتضمن ركن قهوة — ركن القهوة محجوز عليه ذاك اليوم`;
-    errEl.classList.add('show');
-    return;
-  }
-
   const order = {customerId, customerName:c.name, customerPhone:c.phone, date, items, paid, notes};
   if(id){
     const idx = data.coffeeOrders.findIndex(o=>o.id===id);
@@ -2045,20 +2033,6 @@ async function saveBooking(){
     });
     if(conflict){
       errEl.textContent = `يوجد تعارض مع حجز ${conflict.customerName} (${fmtDateAr(conflict.checkInDate)} ${fmtTime(conflict.checkInTime)} → ${fmtDateAr(conflict.checkOutDate)} ${fmtTime(conflict.checkOutTime)})`;
-      errEl.classList.add('show');
-      return;
-    }
-  }
-  if(coffee.length>0){
-    const conflictOrder = data.coffeeOrders.find(o=>o.date===ci);
-    if(conflictOrder){
-      errEl.textContent = `يوجد طلب قهوة مستقل بنفس يوم الدخول لعميل ${conflictOrder.customerName||''} — ركن القهوة ما يقدر يخدم طلبين بنفس اليوم`;
-      errEl.classList.add('show');
-      return;
-    }
-    const conflictBookingCoffee = data.bookings.find(b=>b.id!==id && b.status!=='cancelled' && (b.coffee||[]).length>0 && b.checkInDate===ci);
-    if(conflictBookingCoffee){
-      errEl.textContent = `يوجد حجز آخر لعميل ${conflictBookingCoffee.customerName} بنفس يوم الدخول يتضمن ركن قهوة أيضًا`;
       errEl.classList.add('show');
       return;
     }
